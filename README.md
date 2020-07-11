@@ -16,7 +16,7 @@ http://app.calculadora-taxas.com.br.s3-website-sa-east-1.amazonaws.com/
 
 ## Instalação
 
-Caso queira baixe diretamente os arquivos de produção [aqui](https://github.com/correamarcio/calculadora-de-taxas/blob/master/calculadora-de-taxas%20--PROD.rar?raw=true).
+Caso queira baixe diretamente os arquivos de produção [aqui](https://github.com/correamarcio/calculadora-de-taxas/blob/master/dist/calculadora-de-taxas.rar).
 
 Ou baixe o projeto completo e execute:
 
