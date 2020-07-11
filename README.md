@@ -6,6 +6,14 @@
 
 http://app.calculadora-taxas.com.br.s3-website-sa-east-1.amazonaws.com/
 
+## Calculadora
+
+![Calculadora](https://github.com/correamarcio/calculadora-de-taxas/blob/master/public/img/calc.PNG?raw=true)
+
+## Tabela
+
+![Tabela](https://github.com/correamarcio/calculadora-de-taxas/blob/master/public/img/tabela.PNG)
+
 ## Instalação
 
 Caso queira baixe diretamente os arquivos de produção [aqui](https://github.com/correamarcio/calculadora-de-taxas/blob/master/calculadora-de-taxas%20--PROD.rar?raw=true).
@@ -23,11 +31,3 @@ $ npm install
 ```shell
 $ ng serve
 ```
-
-## Calculadora
-
-![enter image description here](https://github.com/correamarcio/calculadora-de-taxas/blob/master/Calc.PNG?raw=true)
-
-## Tabela
-
-![enter image description here](https://github.com/correamarcio/calculadora-de-taxas/blob/master/Tabela.PNG?raw=true)
