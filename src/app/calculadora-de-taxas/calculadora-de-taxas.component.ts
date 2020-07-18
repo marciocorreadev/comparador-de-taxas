@@ -82,7 +82,6 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     if (this.form.get('promocao').value != '0') {
       return {
         '1D': () => (this.taxas.creditoAVista1D = value),
-        '14D': () => (this.taxas.creditoAVista14D = value),
         '30D': () => (this.taxas.creditoAVista30D = value),
       }[type]();
     } else {
@@ -92,7 +91,6 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
   atualizarTxCredParcelado(type: string, value: number) {
     return {
       '1D': () => (this.taxas.creditoParcelado1D = value),
-      '14D': () => (this.taxas.creditoParcelado14D = value),
       '30D': () => (this.taxas.creditoParcelado30D = value),
     }[type]();
   }
@@ -106,10 +104,6 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
       '1D': {
         parcelado: this.taxas.creditoParcelado1D,
         aVista: this.taxas.creditoAVista1D,
-      },
-      '14D': {
-        parcelado: this.taxas.creditoParcelado14D,
-        aVista: this.taxas.creditoAVista14D,
       },
       '30D': {
         parcelado: this.taxas.creditoParcelado30D,

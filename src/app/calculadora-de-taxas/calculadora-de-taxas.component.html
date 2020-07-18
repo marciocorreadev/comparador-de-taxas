@@ -8,14 +8,9 @@
             <label for="valorTransacao" class="mr-2"
               >Valor da Transação:
 
-              <i
-                class="fas ml-1 fa-exclamation-triangle"
-                tooltip="Valor da transação é obrigatório"
-              ></i
+              <i class="fas ml-1 fa-exclamation-triangle" tooltip="Valor da transação é obrigatório"></i
             ></label>
-            <span class="alert-erro" *ngIf="!validForm"
-              >Informe o Valor da Transação!
-            </span>
+            <span class="alert-erro" *ngIf="!validForm">Informe o Valor da Transação! </span>
             <input
               (blur)="validarFormulario()"
               [ngClass]="{ 'is-invalid': !validForm }"
@@ -41,18 +36,13 @@
               name="planoRecebimento"
               formControlName="planoRecebimento"
             >
-              <option value="1D">1 Dia</option>
-              <option value="14D">14 Dias</option>
-              <option value="30D">30 Dias</option>
+              <option value="1D">1 Dia (Antecipado)</option>
+              <option value="30D">30 Dias (Normal em parcelas)</option>
             </select>
           </div>
           <div class="col-md-6">
             <label for="taxaDebito"
-              >Taxa Débito:
-              <i
-                class="far fa-question-circle"
-                tooltip="Taxa cobrada por vendas a débito"
-              ></i
+              >Taxa Débito: <i class="far fa-question-circle" tooltip="Taxa cobrada por vendas a débito"></i
             ></label>
             <input
               id="taxaDebito"
@@ -71,34 +61,18 @@
           </div>
           <div class="col-md-6">
             <label for="promocao"
-              >Promoção:
-              <i
-                class="far fa-question-circle"
-                tooltip="Escolha sua promoção"
-              ></i
+              >Promoção: <i class="far fa-question-circle" tooltip="Escolha sua promoção"></i
             ></label>
-            <select
-              class="form-control form-control-sm"
-              id="promocao"
-              name="promocao"
-              formControlName="promocao"
-            >
-              <option value="0"
-                >0% de taxa no débito e crédito nos 3 primeiros meses</option
-              >
-              <option value="199"
-                >1.99% de taxa no débito no primeiro ano</option
-              >
+            <select class="form-control form-control-sm" id="promocao" name="promocao" formControlName="promocao">
+              <option value="0">0% de taxa no débito e crédito nos 3 primeiros meses</option>
+              <option value="199">1.99% de taxa no débito no primeiro ano</option>
               <option value="null">Sem promoção</option>
             </select>
           </div>
           <div class="col-md-6">
             <label for="taxaCreditoAVista"
               >Taxa Crédito a Vista:
-              <i
-                class="far fa-question-circle"
-                tooltip="Taxa cobrada por vendas em crédito à vista"
-              ></i
+              <i class="far fa-question-circle" tooltip="Taxa cobrada por vendas em crédito à vista"></i
             ></label>
             <input
               currencyMask
@@ -119,10 +93,7 @@
           <div class="col-md-6">
             <label for="taxaCreditoParcelado"
               >Taxa de Crédito Parcelado:
-              <i
-                class="far fa-question-circle"
-                tooltip="Taxa cobrada por vendas em crédito parcelado"
-              ></i
+              <i class="far fa-question-circle" tooltip="Taxa cobrada por vendas em crédito parcelado"></i
             ></label>
             <input
               id="taxaCreditoParcelado"
@@ -167,20 +138,12 @@
 
           <div class="col-md-1"></div>
           <div class="col-md-2 limpar">
-            <button
-              type="button"
-              (click)="limpar()"
-              class="btn btn-secondary btn-block btn-sm"
-            >
+            <button type="button" (click)="limpar()" class="btn btn-secondary btn-block btn-sm">
               Limpar
             </button>
           </div>
           <div class="col-md-3 calcular">
-            <button
-              type="button"
-              class="btn btn-primary btn-block"
-              (click)="calcular(form.value)"
-            >
+            <button type="button" class="btn btn-primary btn-block" (click)="calcular(form.value)">
               Cálcular
             </button>
           </div>
@@ -209,34 +172,22 @@
             <span tooltip="Descrição do plano">Descrição</span>
           </th>
           <th class="text-center subtitulo1">
-            <span tooltip="Taxa de intermediação mais a taxa de parcelamento"
-              >Taxa Total</span
-            >
+            <span tooltip="Taxa de intermediação mais a taxa de parcelamento">Taxa Total</span>
           </th>
           <th class="text-center subtitulo2">
-            <span
-              tooltip="Parcela sem acréscimo no caso do vendedor arcar com os descontos"
-              >Valor da Venda</span
-            >
+            <span tooltip="Parcela sem acréscimo no caso do vendedor arcar com os descontos">Valor da Venda</span>
           </th>
 
           <th class="text-center subtitulo2">
-            <span
-              tooltip="Parcela sem acréscimo no caso do vendedor arcar com os descontos"
-              >Valor das Parcelas</span
-            >
+            <span tooltip="Parcela sem acréscimo no caso do vendedor arcar com os descontos">Valor das Parcelas</span>
           </th>
 
           <th class="text-center subtitulo2">
-            <span tooltip="Valor das taxas de intermediação e de parcelamento"
-              >Valor das taxas</span
-            >
+            <span tooltip="Valor das taxas de intermediação e de parcelamento">Valor das taxas</span>
           </th>
 
           <th class="text-center subtitulo2">
-            <span
-              tooltip="Valor da compra subtraído da taxa. É o valor que o vendedor irá receber"
-              class="text-center"
+            <span tooltip="Valor da compra subtraído da taxa. É o valor que o vendedor irá receber" class="text-center"
               >Valor Líq. à Receber</span
             >
           </th>
@@ -247,32 +198,23 @@
             >
           </th>
           <th class="text-center subtitulo4">
-            <span
-              tooltip="Valor da parcela no caso do vendedor repassar as taxas do financiamento ao cliente"
+            <span tooltip="Valor da parcela no caso do vendedor repassar as taxas do financiamento ao cliente"
               >Valor das Parcelas</span
             >
           </th>
           <th class="text-center subtitulo4">
-            <span tooltip="Valor das taxas de intermediação e de parcelamento"
-              >Valor das taxas</span
-            >
+            <span tooltip="Valor das taxas de intermediação e de parcelamento">Valor das taxas</span>
           </th>
           <th class="text-center subtitulo4">
-            <span tooltip="É o valor que o vendedor irá receber"
-              >Valor Líq. à Receber</span
-            >
+            <span tooltip="É o valor que o vendedor irá receber">Valor Líq. à Receber</span>
           </th>
           <th class="text-center subtitulo3">
-            <span
-              tooltip="Valor da compra para o cliente com juros da taxa de parcelamento"
-              class="text-center"
+            <span tooltip="Valor da compra para o cliente com juros da taxa de parcelamento" class="text-center"
               >Valor da Venda</span
             >
           </th>
           <th class="text-center subtitulo3">
-            <span
-              tooltip="Valor da parcelada somente com juros da taxa de parcelamento"
-              class="text-center"
+            <span tooltip="Valor da parcelada somente com juros da taxa de parcelamento" class="text-center"
               >Valor das Parcelas</span
             >
           </th>
@@ -291,97 +233,86 @@
           <td class="conteudo1 titulo-plano">{{ plano?.nome }}</td>
           <td class="conteudo1">
             <ng-template #txTotal
-              >Taxa de intermediação:
-              {{ plano?.txIntermediacao / 100 | percent: "1.2" }} <br />
+              >Taxa de intermediação: {{ plano?.txIntermediacao / 100 | percent: '1.2' }} <br />
               <br />
               Taxa de Parcelamento:
-              {{ plano?.txParcelamento / 100 | percent: "1.2" }}
+              {{ plano?.txParcelamento / 100 | percent: '1.2' }}
             </ng-template>
-            <span [tooltip]="txTotal">
-              {{ plano?.txTotal / 100 | percent: "1.2-3" }}</span
-            >
+            <span [tooltip]="txTotal"> {{ plano?.txTotal / 100 | percent: '1.2-3' }}</span>
           </td>
 
-          <td class="conteudo2">{{ plano?.valorVenda | currency: "BRL" }}</td>
+          <td class="conteudo2">{{ plano?.valorVenda | currency: 'BRL' }}</td>
 
           <td class="conteudo2">
-            {{ plano?.valorParcelaDespesaVendedor | currency: "BRL" }}
+            {{ plano?.valorParcelaDespesaVendedor | currency: 'BRL' }}
           </td>
 
           <td class="conteudo2">
             <ng-template #valorTxDespesaVendedor>
               Valor de desconto da taxa Débito:
-              {{ plano.valorTxDebito | currency: "BRL" }}
+              {{ plano.valorTxDebito | currency: 'BRL' }}
               <br />
               <br />
               Valor de desconto da taxa de intermediação:
-              {{ plano?.valorTxIntermediacaoVendedor | currency: "BRL" }}
+              {{ plano?.valorTxIntermediacaoVendedor | currency: 'BRL' }}
               <br />
               <br />
               Valor de desconto da taxa de Parcelamento:
-              {{ plano?.valorTxParcelamentoVendedor | currency: "BRL" }}
+              {{ plano?.valorTxParcelamentoVendedor | currency: 'BRL' }}
             </ng-template>
 
-            <span [tooltip]="valorTxDespesaVendedor">
-              {{ plano.valorTxDespesaVendedor | currency: "BRL" }}</span
-            >
+            <span [tooltip]="valorTxDespesaVendedor"> {{ plano.valorTxDespesaVendedor | currency: 'BRL' }}</span>
           </td>
 
           <td class="conteudo2" currencyMask>
-            {{ plano.valorLiquidoDespesaVendedor | currency: "BRL" }}
+            {{ plano.valorLiquidoDespesaVendedor | currency: 'BRL' }}
           </td>
 
           <td class="conteudo4">
-            {{ plano.valorVendaDespesaCliente | currency: "BRL" }}
+            {{ plano.valorVendaDespesaCliente | currency: 'BRL' }}
           </td>
           <td class="conteudo4">
-            {{ plano.valorParcelaDespesaCliente | currency: "BRL" }}
+            {{ plano.valorParcelaDespesaCliente | currency: 'BRL' }}
           </td>
           <td class="conteudo4">
             <ng-template #valorTxDespesaCliente>
               Valor de desconto da taxa Débito:
-              {{ plano.txDebitoJurosCliente | currency: "BRL" }}
+              {{ plano.txDebitoJurosCliente | currency: 'BRL' }}
               <br />
               <br />
               Valor de desconto da taxa de intermediação:
-              {{ plano?.valorTxIntermediacaoCliente | currency: "BRL" }}
+              {{ plano?.valorTxIntermediacaoCliente | currency: 'BRL' }}
               <br />
               <br />
               Valor de desconto da taxa de Parcelamento:
-              {{ plano?.valorTxParcelamentoCliente | currency: "BRL" }}
+              {{ plano?.valorTxParcelamentoCliente | currency: 'BRL' }}
             </ng-template>
 
-            <span [tooltip]="valorTxDespesaCliente">{{
-              plano.valorTxDespesaCliente | currency: "BRL"
-            }}</span>
+            <span [tooltip]="valorTxDespesaCliente">{{ plano.valorTxDespesaCliente | currency: 'BRL' }}</span>
           </td>
           <td class="conteudo4">
-            {{ plano.valorLiquidoDespesaClientel | currency: "BRL" }}
+            {{ plano.valorLiquidoDespesaClientel | currency: 'BRL' }}
           </td>
 
           <td class="conteudo3">
             <ng-template #valorVendaDespesaParcelamentoCliente>
               Valor da taxa do parcelamento pelo cliente:
-              {{ plano.valorTxParcelamentoCliente | currency: "BRL" }}
+              {{ plano.valorTxParcelamentoCliente | currency: 'BRL' }}
             </ng-template>
             <span [tooltip]="valorVendaDespesaParcelamentoCliente">
-              {{
-                plano.valorVendaDespesaParcelamentoCliente | currency: "BRL"
-              }}</span
+              {{ plano.valorVendaDespesaParcelamentoCliente | currency: 'BRL' }}</span
             >
           </td>
           <td class="conteudo3">
-            {{ plano.valorParcelaDespesaParcelamentoCliente | currency: "BRL" }}
+            {{ plano.valorParcelaDespesaParcelamentoCliente | currency: 'BRL' }}
           </td>
           <td class="conteudo3">
             <ng-template #valorLiquidoDespesaIntermediacaoCliente>
               Valor da taxa de inetemediação pelo vendedor:
-              {{ plano.valorTxIntermediacaoVendedor | currency: "BRL" }}
+              {{ plano.valorTxIntermediacaoVendedor | currency: 'BRL' }}
             </ng-template>
             <span [tooltip]="valorLiquidoDespesaIntermediacaoCliente">
-              {{
-                plano.valorLiquidoDespesaIntermediacaoCliente | currency: "BRL"
-              }}</span
+              {{ plano.valorLiquidoDespesaIntermediacaoCliente | currency: 'BRL' }}</span
             >
           </td>
         </tr>
