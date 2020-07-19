@@ -19,6 +19,7 @@
 .calcular:hover {
   transform: scale(1.05);
   transition: 0.2s;
+  color: var(--blue);
 }
 
 label {
@@ -72,6 +73,12 @@ table thead tr {
   cursor: help;
 }
 
+table thead tr .subtitulo1 span,
+table thead tr .subtitulo2 span,
+table thead tr .subtitulo3 span,
+table thead tr .subtitulo4 span {
+  font-size: 13px;
+}
 table thead tr .subtitulo1 {
   background-color: #aaacad;
 }
@@ -145,7 +152,10 @@ section {
 #dadosTabela {
   width: 100%;
   margin: 0 auto;
-  transition: 0.5s;
+  transition: all 0.3s ease;
+}
+#dadosTabela:hidden {
+  transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar {
@@ -164,10 +174,6 @@ section {
   font-style: italic;
 }
 
-html {
-  overflow: auto;
-}
-
 .fa-info-circle {
   color: var(--maq);
 }
@@ -175,7 +181,7 @@ html {
 @media (min-width: 376px) {
   ::-webkit-scrollbar {
     -webkit-appearance: none;
-    height: 12px;
+    height: 8px;
   }
 }
 @media (min-width: 720px) {

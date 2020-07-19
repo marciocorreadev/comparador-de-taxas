@@ -1,5 +1,6 @@
 :root {
   --maq: #2196f3;
+  --blue-light: #87c0ee;
   --blue: #007bff;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -42,13 +43,16 @@ body {
 
 ::-webkit-scrollbar {
   -webkit-appearance: none;
-  height: 5px;
-  width: 12px;
+  height: 0px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
   background-color: var(--gray-light);
 }
 ::-webkit-scrollbar-thumb {
   background-color: var(--maq);
-  border-radius: 2px;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary);
 }

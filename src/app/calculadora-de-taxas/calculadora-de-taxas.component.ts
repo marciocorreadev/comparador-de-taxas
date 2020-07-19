@@ -2,6 +2,7 @@ import { CalculadoraDeTaxasService } from './calculadora-de-taxas.service';
 import { Component, OnInit, OnDestroy, ElementRef, ɵConsole } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-calculadora-de-taxas',
   templateUrl: './calculadora-de-taxas.component.html',
@@ -83,7 +84,6 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.form.get('visualizacaoDasTaxas').valueChanges.subscribe(value => {
         this.visualizacaoDasTaxas = value;
-        console.log(value);
       })
     );
     this.form.get('valorTransacao').valueChanges.subscribe(value => {
@@ -92,7 +92,6 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
       }
     });
     this.calcular(this.form.value);
-    console.log(this.width);
   }
   atualizarTxDebito(type: string, value: number) {
     return {
@@ -156,27 +155,6 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     this.form.get('valorTransacao').status == 'VALID' ? (this.validForm = true) : (this.validForm = false);
   }
 
-  limpar() {
-    window.scroll({ top: 30, behavior: 'smooth' });
-    setTimeout(() => {
-      for (const key in this.taxas) {
-        this.taxas[key] = this.bkpTaxas[key];
-      }
-      this.form.setValue({
-        valorTransacao: 0,
-        taxaCreditoAVista: this.taxas.creditoAVista1D,
-        planoRecebimento: '1D',
-        taxaCreditoParcelado2a6: this.taxas.creditoParcelado2a61D,
-        taxaCreditoParcelado7a12: this.taxas.creditoParcelado7a121D,
-        taxaDebito: this.taxas.debitoNull,
-        taxaParcelamento: 2.99,
-        promocao: 'null',
-        visualizacaoDasTaxas: 'vendedor',
-      });
-      this.resultados = [];
-      this.validForm = true;
-    }, 300);
-  }
   calculaAVista(form, nome) {
     const taxa = nome === 'Déb.' ? form.taxaDebito : form.taxaCreditoAVista;
     const valorTotal = form.valorTransacao;
@@ -184,7 +162,10 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     valorTaxaTotal /= 100;
     const valorVendaDespesaCliente = valorTotal / (1 - valorTaxaTotal / 100);
     let p: any = {};
-    p.nome = nome;
+    p.nome = {
+      curto: nome,
+      longo: nome === 'Déb.' ? 'Débito' : 'Crédito 1x',
+    };
     p.txIntermediacao = nome === 'Déb.' ? 0 : taxa;
     p.qtdeParcelas = 1;
     p.txParcelamento = 0;
@@ -213,7 +194,10 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     for (let qtdeParcelas = 2; qtdeParcelas <= 12; qtdeParcelas++) {
       let valorTxParcelamento = this.calcularTxParcelamento(valorTotal, qtdeParcelas, form.taxaParcelamento / 100);
       let p: any = {};
-      p.nome = `${qtdeParcelas}x`;
+      p.nome = {
+        curto: `${qtdeParcelas}x`,
+        longo: `Crédito ${qtdeParcelas}x`,
+      };
       p.qtdeParcelas = qtdeParcelas;
       p.txIntermediacao = qtdeParcelas <= 6 ? form.taxaCreditoParcelado2a6 : form.taxaCreditoParcelado7a12;
       p.txParcelamento = 100 * (valorTxParcelamento / valorTotal);
@@ -256,13 +240,35 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
       this.calculaAVista(form, '1x');
       this.calculaParcelado(form);
       setTimeout(() => {
-        window.scroll({ top: 1000, behavior: 'smooth' });
+        window.scroll({ top: 700, behavior: 'smooth' });
       }, 300);
     } else {
       this.validarFormulario();
       this.el.nativeElement.querySelector('.valorTransacao').focus();
       this.el.nativeElement.querySelector('.valorTransacao').select();
     }
+  }
+
+  limpar() {
+    window.scroll({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      for (const key in this.taxas) {
+        this.taxas[key] = this.bkpTaxas[key];
+      }
+      this.form.setValue({
+        valorTransacao: 100,
+        taxaCreditoAVista: this.taxas.creditoAVista1D,
+        planoRecebimento: '1D',
+        taxaCreditoParcelado2a6: this.taxas.creditoParcelado2a61D,
+        taxaCreditoParcelado7a12: this.taxas.creditoParcelado7a121D,
+        taxaDebito: this.taxas.debitoNull,
+        taxaParcelamento: 2.99,
+        promocao: 'null',
+        visualizacaoDasTaxas: 'vendedor',
+      });
+      this.resultados = [];
+      this.validForm = true;
+    }, 300);
   }
   getWidth() {
     this.width = document.querySelector('body').scrollWidth;
