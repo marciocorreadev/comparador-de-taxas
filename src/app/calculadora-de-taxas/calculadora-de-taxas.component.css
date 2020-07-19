@@ -39,16 +39,6 @@ div table * {
   display: block;
 }
 
-@media (min-width: 720px) {
-  .limpar,
-  .calcular {
-    padding-top: 31px;
-  }
-  .alert-erro {
-    display: inline;
-  }
-}
-
 button:disabled {
   cursor: no-drop;
 }
@@ -152,21 +142,48 @@ section {
   box-shadow: 0px 0px 2px var(--dark);
   /* border-radius: 5px; */
 }
-#tabela {
+#dadosTabela {
   width: 100%;
   margin: 0 auto;
+  transition: 0.5s;
 }
 
 ::-webkit-scrollbar {
   -webkit-appearance: none;
-  width: 5px;
-  height: 3px;
-  border-radius: 4px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background-color: var(--secondary);
 }
 ::-webkit-scrollbar-thumb {
-  background-color: var(--gray);
+  background-color: var(--maq);
+  border-radius: 15px;
 }
 
 .obs {
   font-style: italic;
+}
+
+html {
+  overflow: auto;
+}
+
+.fa-info-circle {
+  color: var(--maq);
+}
+
+@media (min-width: 376px) {
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    height: 12px;
+  }
+}
+@media (min-width: 720px) {
+  .limpar,
+  .calcular {
+    padding-top: 31px;
+  }
+  .alert-erro {
+    display: inline;
+  }
 }

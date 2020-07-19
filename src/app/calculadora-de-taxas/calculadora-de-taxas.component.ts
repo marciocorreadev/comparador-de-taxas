@@ -1,5 +1,5 @@
 import { CalculadoraDeTaxasService } from './calculadora-de-taxas.service';
-import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ɵConsole } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 @Component({
@@ -16,6 +16,7 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
   validForm: boolean = true;
   tipoTaxaAVista: string = '(1 Dia)';
   visualizacaoDasTaxas: string = 'vendedor';
+  width: number = document.querySelector('body').scrollWidth;
 
   private subscriptions: Subscription[] = [];
   constructor(
@@ -90,7 +91,8 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
         this.form.get('valorTransacao').status == 'VALID' ? (this.validForm = true) : (this.validForm = false);
       }
     });
-    // this.calcular(this.form.value);
+    this.calcular(this.form.value);
+    console.log(this.width);
   }
   atualizarTxDebito(type: string, value: number) {
     return {
@@ -155,7 +157,7 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
   }
 
   limpar() {
-    window.scroll({ top: 20, behavior: 'smooth' });
+    window.scroll({ top: 30, behavior: 'smooth' });
     setTimeout(() => {
       for (const key in this.taxas) {
         this.taxas[key] = this.bkpTaxas[key];
@@ -261,6 +263,9 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
       this.el.nativeElement.querySelector('.valorTransacao').focus();
       this.el.nativeElement.querySelector('.valorTransacao').select();
     }
+  }
+  getWidth() {
+    this.width = document.querySelector('body').scrollWidth;
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => {
