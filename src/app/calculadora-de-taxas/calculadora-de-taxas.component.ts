@@ -90,7 +90,7 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
         this.form.get('valorTransacao').status == 'VALID' ? (this.validForm = true) : (this.validForm = false);
       }
     });
-    this.calcular(this.form.value);
+    // this.calcular(this.form.value);
   }
   atualizarTxDebito(type: string, value: number) {
     return {
@@ -155,22 +155,25 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
   }
 
   limpar() {
-    for (const key in this.taxas) {
-      this.taxas[key] = this.bkpTaxas[key];
-    }
-    this.form.setValue({
-      valorTransacao: 0,
-      taxaCreditoAVista: this.taxas.creditoAVista1D,
-      planoRecebimento: '1D',
-      taxaCreditoParcelado2a6: this.taxas.creditoParcelado2a61D,
-      taxaCreditoParcelado7a12: this.taxas.creditoParcelado7a121D,
-      taxaDebito: this.taxas.debitoNull,
-      taxaParcelamento: 2.99,
-      promocao: 'null',
-      visualizacaoDasTaxas: 'vendedor',
-    });
-    this.resultados = [];
-    this.validForm = true;
+    window.scroll({ top: 20, behavior: 'smooth' });
+    setTimeout(() => {
+      for (const key in this.taxas) {
+        this.taxas[key] = this.bkpTaxas[key];
+      }
+      this.form.setValue({
+        valorTransacao: 0,
+        taxaCreditoAVista: this.taxas.creditoAVista1D,
+        planoRecebimento: '1D',
+        taxaCreditoParcelado2a6: this.taxas.creditoParcelado2a61D,
+        taxaCreditoParcelado7a12: this.taxas.creditoParcelado7a121D,
+        taxaDebito: this.taxas.debitoNull,
+        taxaParcelamento: 2.99,
+        promocao: 'null',
+        visualizacaoDasTaxas: 'vendedor',
+      });
+      this.resultados = [];
+      this.validForm = true;
+    }, 300);
   }
   calculaAVista(form, nome) {
     const taxa = nome === 'Déb.' ? form.taxaDebito : form.taxaCreditoAVista;
@@ -250,9 +253,9 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
       this.calculaAVista(form, 'Déb.');
       this.calculaAVista(form, '1x');
       this.calculaParcelado(form);
-
-      this.el.nativeElement.querySelector('.obs').focus();
-      this.el.nativeElement.querySelector('.obs').select();
+      setTimeout(() => {
+        window.scroll({ top: 1000, behavior: 'smooth' });
+      }, 300);
     } else {
       this.validarFormulario();
       this.el.nativeElement.querySelector('.valorTransacao').focus();
