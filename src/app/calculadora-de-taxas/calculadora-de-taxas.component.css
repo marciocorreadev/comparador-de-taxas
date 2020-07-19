@@ -22,7 +22,8 @@
 }
 
 label {
-  font-weight: 500;
+  font-weight: 599;
+  font-size: 14px;
 }
 
 label[for='valorTransacao'] {
@@ -111,11 +112,6 @@ table tbody tr .conteudo3 {
   background-color: #ecd7e8;
 } */
 
-section table,
-section {
-  border-radius: 5px;
-}
-
 div section table tbody tr * {
   font-size: 14px;
 }
@@ -152,6 +148,25 @@ section table tbody tr td.titulo-plano {
   border-bottom-color: black;
 }
 
-.table {
-  border: 1px solid var(--maq);
+section {
+  box-shadow: 0px 0px 2px var(--dark);
+  /* border-radius: 5px; */
+}
+#tabela {
+  width: 100%;
+  margin: 0 auto;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 5px;
+  height: 3px;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--gray);
+}
+
+.obs {
+  font-style: italic;
 }

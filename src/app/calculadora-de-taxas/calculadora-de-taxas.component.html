@@ -137,7 +137,7 @@
           </div>
           <div class="col-md-6">
             <label for="taxaParcelamento"
-              >Taxa de Antecipação / Parcelamento A.M.:
+              >Taxa de Antecipação/Parcelamento A.M.:
               <i
                 class="far fa-question-circle"
                 tooltip="Taxa cobrada em cada parcela por vendas em crédito parcelado"
@@ -190,9 +190,10 @@
       </form>
     </div>
   </div>
-
-  <section class="table-responsive mt-3 mb-5" *ngIf="resultados.length > 0">
-    <table class="table table-bordered table-hover table-sm text-center">
+</div>
+<div id="tabela">
+  <section class="table-responsive mt-3 mb-3" *ngIf="resultados.length > 0">
+    <table class="table table-bordered table-hover table-sm text-center mb-0">
       <thead>
         <tr>
           <th colspan="3" class="text-center titulo1">PLANO</th>
@@ -208,7 +209,7 @@
         </tr>
         <tr>
           <th class="text-center subtitulo1">
-            <span tooltip="Descrição do plano">Descrição </span>
+            <span tooltip="Descrição do plano">Tipo</span>
           </th>
           <th class="text-center subtitulo1">
             <span tooltip="Taxa de intermediação mais a taxa de parcelamento">Taxa A.M.</span>
@@ -272,7 +273,10 @@
         <tr *ngFor="let plano of resultados; let even = even; let odd = odd" [ngClass]="{ odd: odd, even: even }">
           <td class="conteudo1 titulo-plano">{{ plano?.nome }}</td>
           <td class="conteudo1">
-            <span> {{ plano?.txParcelamento / 100 | percent: '1.2-3' }}</span>
+            <ng-template #txParcelamento>
+              Taxa de Parcelamento ao mês: {{ plano?.txParcelamento / 100 | percent: '1.2' }}
+            </ng-template>
+            <span [tooltip]="txParcelamento"> {{ plano?.txParcelamento / 100 | percent: '1.2-3' }}</span>
           </td>
           <td class="conteudo1">
             <ng-template #txTotal
@@ -285,7 +289,10 @@
             <span [tooltip]="txTotal" placement="bottom"> {{ plano?.txTotal / 100 | percent: '1.2-3' }}</span>
           </td>
           <td class="conteudo2" *ngIf="visualizacaoDasTaxas == 'vendedor'">
-            {{ plano?.valorParcelaDespesaVendedor | currency: 'BRL' }}
+            <ng-template #parcelaCliente>
+              {{ plano.valorVenda | currency: 'BRL' }} / {{ plano.qtdeParcelas }}
+            </ng-template>
+            <span [tooltip]="parcelaCliente">{{ plano?.valorParcelaDespesaVendedor | currency: 'BRL' }}</span>
           </td>
 
           <td class="conteudo2" *ngIf="visualizacaoDasTaxas == 'vendedor'">
@@ -356,7 +363,7 @@
               Valor da taxa de intermediação pelo vendedor:
               {{ plano.valorTxIntermediacaoVendedor | currency: 'BRL' }}
             </ng-template>
-            <span [tooltip]="valorLiquidoDespesaIntermediacaoCliente" placement="bottom">
+            <span [tooltip]="valorLiquidoDespesaIntermediacaoCliente" placement="bottom" triggers="hover">
               {{ plano.valorLiquidoDespesaIntermediacaoCliente | currency: 'BRL' }}</span
             >
           </td>
@@ -364,4 +371,5 @@
       </tbody>
     </table>
   </section>
+  <p class="container obs">Clique sobre a taxa ou valor para mais detalhes.</p>
 </div>

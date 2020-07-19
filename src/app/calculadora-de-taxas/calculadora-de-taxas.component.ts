@@ -173,26 +173,27 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     this.validForm = true;
   }
   calculaAVista(form, nome) {
-    const taxa = nome === 'Débito' ? form.taxaDebito : form.taxaCreditoAVista;
+    const taxa = nome === 'Déb.' ? form.taxaDebito : form.taxaCreditoAVista;
     const valorTotal = form.valorTransacao;
     let valorTaxaTotal: number = Number((taxa * 100).toFixed(3));
     valorTaxaTotal /= 100;
     const valorVendaDespesaCliente = valorTotal / (1 - valorTaxaTotal / 100);
     let p: any = {};
     p.nome = nome;
-    p.txIntermediacao = nome === 'Débito' ? 0 : taxa;
+    p.txIntermediacao = nome === 'Déb.' ? 0 : taxa;
+    p.qtdeParcelas = 1;
     p.txParcelamento = 0;
     p.txTotal = valorTaxaTotal;
     p.valorVenda = valorTotal;
     p.valorParcelaDespesaVendedor = valorTotal;
-    p.valorTxIntermediacaoVendedor = nome === 'Débito' ? 0 : taxa;
+    p.valorTxIntermediacaoVendedor = nome === 'Déb.' ? 0 : taxa;
     p.valorTxParcelamentoVendedor = 0;
     p.valorTxDespesaVendedor = (valorTotal * valorTaxaTotal) / 100;
-    p.valorTxDebito = nome === 'Débito' ? valorTaxaTotal : 0;
+    p.valorTxDebito = nome === 'Déb.' ? valorTaxaTotal : 0;
     p.valorLiquidoDespesaVendedor = valorTotal - p.valorTxDespesaVendedor;
     p.valorVendaDespesaCliente = valorVendaDespesaCliente;
     p.valorParcelaDespesaCliente = valorVendaDespesaCliente;
-    p.valorTxIntermediacaoCliente = nome === 'Débito' ? 0 : taxa;
+    p.valorTxIntermediacaoCliente = nome === 'Déb.' ? 0 : taxa;
     p.valorTxParcelamentoCliente = 0;
     p.txDebitoJurosCliente = valorVendaDespesaCliente - valorTotal;
     p.valorTxDespesaCliente = p.txDebitoJurosCliente;
@@ -207,7 +208,8 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     for (let qtdeParcelas = 2; qtdeParcelas <= 12; qtdeParcelas++) {
       let valorTxParcelamento = this.calcularTxParcelamento(valorTotal, qtdeParcelas, form.taxaParcelamento / 100);
       let p: any = {};
-      p.nome = `Créd. ${qtdeParcelas}x`;
+      p.nome = `${qtdeParcelas}x`;
+      p.qtdeParcelas = qtdeParcelas;
       p.txIntermediacao = qtdeParcelas <= 6 ? form.taxaCreditoParcelado2a6 : form.taxaCreditoParcelado7a12;
       p.txParcelamento = 100 * (valorTxParcelamento / valorTotal);
       p.txParcelamento = Number(p.txParcelamento.toFixed(2));
@@ -242,11 +244,15 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
   }
   calcular(form) {
     this.validarFormulario();
+
     if (this.validForm) {
       this.resultados = [];
-      this.calculaAVista(form, 'Débito');
-      this.calculaAVista(form, 'Créd. 1x');
+      this.calculaAVista(form, 'Déb.');
+      this.calculaAVista(form, '1x');
       this.calculaParcelado(form);
+
+      this.el.nativeElement.querySelector('.obs').focus();
+      this.el.nativeElement.querySelector('.obs').select();
     } else {
       this.validarFormulario();
       this.el.nativeElement.querySelector('.valorTransacao').focus();
