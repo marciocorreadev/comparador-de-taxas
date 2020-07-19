@@ -6,12 +6,13 @@
           <div class="col-md-12"></div>
           <div class="col-md-6">
             <label for="valorTransacao" class="mr-2"
-              >Valor da Transação:
+              >Valor da Venda:
 
               <i class="fas ml-1 fa-exclamation-triangle" tooltip="Valor da transação é obrigatório"></i
             ></label>
             <span class="alert-erro" *ngIf="!validForm">Informe o Valor da Transação! </span>
             <input
+              onClick="this.focus();this.select()"
               (blur)="validarFormulario()"
               [ngClass]="{ 'is-invalid': !validForm }"
               currencyMask
@@ -45,6 +46,7 @@
               >Taxa Débito: <i class="far fa-question-circle" tooltip="Taxa cobrada por vendas a débito"></i
             ></label>
             <input
+              onClick="this.focus();this.select()"
               id="taxaDebito"
               name="taxaDebito"
               class="form-control form-control-sm"
@@ -59,7 +61,7 @@
               formControlName="taxaDebito"
             />
           </div>
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <label for="promocao"
               >Promoção: <i class="far fa-question-circle" tooltip="Escolha sua promoção"></i
             ></label>
@@ -68,13 +70,14 @@
               <option value="199">1.99% de taxa no débito no primeiro ano</option>
               <option value="null">Sem promoção</option>
             </select>
-          </div>
+          </div> -->
           <div class="col-md-6">
             <label for="taxaCreditoAVista"
-              >Taxa Crédito a Vista:
+              >Taxa Crédito a Vista {{ tipoTaxaAVista }}:
               <i class="far fa-question-circle" tooltip="Taxa cobrada por vendas em crédito à vista"></i
             ></label>
             <input
+              onClick="this.focus();this.select()"
               currencyMask
               [options]="{
                 decimal: '.',
@@ -91,13 +94,14 @@
           </div>
 
           <div class="col-md-6">
-            <label for="taxaCreditoParcelado"
-              >Taxa de Crédito Parcelado:
+            <label for="taxaCreditoParcelado2a6"
+              >Taxa de Crédito Parcelado 2x a 6x:
               <i class="far fa-question-circle" tooltip="Taxa cobrada por vendas em crédito parcelado"></i
             ></label>
             <input
-              id="taxaCreditoParcelado"
-              name="taxaCreditoParcelado"
+              onClick="this.focus() ; this.select()"
+              id="taxaCreditoParcelado2a6"
+              name="taxaCreditoParcelado2a6"
               class="form-control form-control-sm"
               type="text"
               currencyMask
@@ -107,20 +111,40 @@
                 suffix: ' %',
                 thousands: ','
               }"
-              formControlName="taxaCreditoParcelado"
+              formControlName="taxaCreditoParcelado2a6"
             />
           </div>
-        </div>
-        <div class="row">
+          <div class="col-md-6">
+            <label for="taxaCreditoParcelado7a12"
+              >Taxa de Crédito Parcelado 7x a 12x:
+              <i class="far fa-question-circle" tooltip="Taxa cobrada por vendas em crédito parcelado"></i
+            ></label>
+            <input
+              onClick="this.focus();this.select()"
+              id="taxaCreditoParcelado7a12"
+              name="taxaCreditoParcelado7a12"
+              class="form-control form-control-sm"
+              type="text"
+              currencyMask
+              [options]="{
+                decimal: '.',
+                prefix: '',
+                suffix: ' %',
+                thousands: ','
+              }"
+              formControlName="taxaCreditoParcelado7a12"
+            />
+          </div>
           <div class="col-md-6">
             <label for="taxaParcelamento"
-              >Taxa de Parcelamento:
+              >Taxa de Antecipação / Parcelamento A.M.:
               <i
                 class="far fa-question-circle"
                 tooltip="Taxa cobrada em cada parcela por vendas em crédito parcelado"
               ></i
             ></label>
             <input
+              onClick="this.focus();this.select()"
               id="taxaParcelamento"
               name="taxaParcelamento"
               class="form-control form-control-sm"
@@ -135,7 +159,22 @@
               formControlName="taxaParcelamento"
             />
           </div>
-
+          <div class="col-md-6">
+            <label for="visualizacaoDasTaxas"
+              >Tipo de Visão das Taxas:
+              <i class="far fa-question-circle" tooltip="Tipo de visão das taxas na tabela que irá ser gerada"></i
+            ></label>
+            <select
+              class="form-control form-control-sm"
+              id="visualizacaoDasTaxas"
+              name="visualizacaoDasTaxas"
+              formControlName="visualizacaoDasTaxas"
+            >
+              <option value="vendedor">Vendedor</option>
+              <option value="cliente">Cliente</option>
+            </select>
+          </div>
+          <div class="col-md-6"></div>
           <div class="col-md-1"></div>
           <div class="col-md-2 limpar">
             <button type="button" (click)="limpar()" class="btn btn-secondary btn-block btn-sm">
@@ -153,101 +192,103 @@
   </div>
 
   <section class="table-responsive mt-3 mb-5" *ngIf="resultados.length > 0">
-    <table class="table table-bordered table-hover table-sm pt text-center">
+    <table class="table table-bordered table-hover table-sm text-center">
       <thead>
         <tr>
-          <th colspan="2" class="text-center titulo1">PLANO</th>
-          <th colspan="4" class="text-center titulo2">
+          <th colspan="3" class="text-center titulo1">PLANO</th>
+          <th colspan="3" class="text-center titulo2" *ngIf="visualizacaoDasTaxas == 'vendedor'">
             VENDEDOR ARCANDO COM TODAS AS TAXAS
           </th>
-          <th colspan="4" class="text-center titulo4">
+          <th colspan="4" class="text-center titulo4" *ngIf="visualizacaoDasTaxas == 'cliente'">
             CLIENTE ARCANDO COM TODAS AS TAXAS
           </th>
-          <th colspan="3" class="text-center titulo3">
+          <th colspan="4" class="text-center titulo3" *ngIf="visualizacaoDasTaxas == 'vendedor'">
             CLIENTE ARCANDO COM A TAXA DE PARCELAMENTO
           </th>
         </tr>
         <tr>
           <th class="text-center subtitulo1">
-            <span tooltip="Descrição do plano">Descrição</span>
+            <span tooltip="Descrição do plano">Descrição </span>
+          </th>
+          <th class="text-center subtitulo1">
+            <span tooltip="Taxa de intermediação mais a taxa de parcelamento">Taxa A.M.</span>
           </th>
           <th class="text-center subtitulo1">
             <span tooltip="Taxa de intermediação mais a taxa de parcelamento">Taxa Total</span>
           </th>
-          <th class="text-center subtitulo2">
-            <span tooltip="Parcela sem acréscimo no caso do vendedor arcar com os descontos">Valor da Venda</span>
+          <th class="text-center subtitulo2" *ngIf="visualizacaoDasTaxas == 'vendedor'">
+            <span tooltip="Parcela sem acréscimo no caso do vendedor arcar com os descontos"
+              >Valor das Parcelas ao Cliente</span
+            >
           </th>
 
-          <th class="text-center subtitulo2">
-            <span tooltip="Parcela sem acréscimo no caso do vendedor arcar com os descontos">Valor das Parcelas</span>
-          </th>
-
-          <th class="text-center subtitulo2">
+          <th class="text-center subtitulo2" *ngIf="visualizacaoDasTaxas == 'vendedor'">
             <span tooltip="Valor das taxas de intermediação e de parcelamento">Valor das taxas</span>
           </th>
 
-          <th class="text-center subtitulo2">
+          <th class="text-center subtitulo2" *ngIf="visualizacaoDasTaxas == 'vendedor'">
             <span tooltip="Valor da compra subtraído da taxa. É o valor que o vendedor irá receber" class="text-center"
-              >Valor Líq. à Receber</span
+              >Vendedor Recebe</span
             >
           </th>
-          <th class="text-center subtitulo4">
+          <th class="text-center subtitulo4" *ngIf="visualizacaoDasTaxas == 'cliente'">
             <span
               tooltip="Valor da compra no caso do vendedor repassar as taxas do financiamento ao cliente. Vendedor irá receber o valor integral da transação"
-              >Valor da Venda</span
+              >Valor ao Cliente</span
             >
           </th>
-          <th class="text-center subtitulo4">
+          <th class="text-center subtitulo4" *ngIf="visualizacaoDasTaxas == 'cliente'">
             <span tooltip="Valor da parcela no caso do vendedor repassar as taxas do financiamento ao cliente"
-              >Valor das Parcelas</span
+              >Valor das Parcelas ao Cliente</span
             >
           </th>
-          <th class="text-center subtitulo4">
+          <th class="text-center subtitulo4" *ngIf="visualizacaoDasTaxas == 'cliente'">
             <span tooltip="Valor das taxas de intermediação e de parcelamento">Valor das taxas</span>
           </th>
-          <th class="text-center subtitulo4">
-            <span tooltip="É o valor que o vendedor irá receber">Valor Líq. à Receber</span>
+          <th class="text-center subtitulo4" *ngIf="visualizacaoDasTaxas == 'cliente'">
+            <span tooltip="É o valor que o vendedor irá receber">Vendedor Recebe</span>
           </th>
-          <th class="text-center subtitulo3">
+          <th class="text-center subtitulo3" *ngIf="visualizacaoDasTaxas == 'vendedor'">
             <span tooltip="Valor da compra para o cliente com juros da taxa de parcelamento" class="text-center"
-              >Valor da Venda</span
+              >Valor ao Cliente</span
             >
           </th>
-          <th class="text-center subtitulo3">
+          <th class="text-center subtitulo3" *ngIf="visualizacaoDasTaxas == 'vendedor'">
             <span tooltip="Valor da parcelada somente com juros da taxa de parcelamento" class="text-center"
-              >Valor das Parcelas</span
+              >Valor das Parcelas ao Cliente</span
             >
           </th>
-          <th class="text-center subtitulo3">
+          <th class="text-center subtitulo3" *ngIf="visualizacaoDasTaxas == 'vendedor'">
             <span
               tooltip="Valor líquido descontando a taxa de intermediação. É o valor que o vendedor irá receber"
               class="text-center"
-              >Valor Líq. à Receber</span
+              >Vendedor Recebe</span
             >
           </th>
         </tr>
       </thead>
 
-      <tbody *ngFor="let plano of resultados">
-        <tr>
+      <tbody>
+        <tr *ngFor="let plano of resultados; let even = even; let odd = odd" [ngClass]="{ odd: odd, even: even }">
           <td class="conteudo1 titulo-plano">{{ plano?.nome }}</td>
           <td class="conteudo1">
+            <span> {{ plano?.txParcelamento / 100 | percent: '1.2-3' }}</span>
+          </td>
+          <td class="conteudo1">
             <ng-template #txTotal
-              >Taxa de intermediação: {{ plano?.txIntermediacao / 100 | percent: '1.2' }} <br />
+              >Taxa de intermediação: {{ plano?.txIntermediacao / 100 + plano?.valorTxDebito / 100 | percent: '1.2' }}
+              <br />
               <br />
               Taxa de Parcelamento:
               {{ plano?.txParcelamento / 100 | percent: '1.2' }}
             </ng-template>
-            <span [tooltip]="txTotal"> {{ plano?.txTotal / 100 | percent: '1.2-3' }}</span>
+            <span [tooltip]="txTotal" placement="bottom"> {{ plano?.txTotal / 100 | percent: '1.2-3' }}</span>
           </td>
-
-          <td class="conteudo2">{{ plano?.valorVenda | currency: 'BRL' }}</td>
-
-          <td class="conteudo2">
+          <td class="conteudo2" *ngIf="visualizacaoDasTaxas == 'vendedor'">
             {{ plano?.valorParcelaDespesaVendedor | currency: 'BRL' }}
           </td>
 
-          <td class="conteudo2">
+          <td class="conteudo2" *ngIf="visualizacaoDasTaxas == 'vendedor'">
             <ng-template #valorTxDespesaVendedor>
               Valor de desconto da taxa Débito:
               {{ plano.valorTxDebito | currency: 'BRL' }}
@@ -261,20 +302,22 @@
               {{ plano?.valorTxParcelamentoVendedor | currency: 'BRL' }}
             </ng-template>
 
-            <span [tooltip]="valorTxDespesaVendedor"> {{ plano.valorTxDespesaVendedor | currency: 'BRL' }}</span>
+            <span [tooltip]="valorTxDespesaVendedor" placement="bottom">
+              {{ plano.valorTxDespesaVendedor | currency: 'BRL' }}</span
+            >
           </td>
 
-          <td class="conteudo2" currencyMask>
+          <td class="conteudo2 text-center" *ngIf="visualizacaoDasTaxas == 'vendedor'" currencyMask>
             {{ plano.valorLiquidoDespesaVendedor | currency: 'BRL' }}
           </td>
 
-          <td class="conteudo4">
+          <td class="conteudo4" *ngIf="visualizacaoDasTaxas == 'cliente'">
             {{ plano.valorVendaDespesaCliente | currency: 'BRL' }}
           </td>
-          <td class="conteudo4">
+          <td class="conteudo4" *ngIf="visualizacaoDasTaxas == 'cliente'">
             {{ plano.valorParcelaDespesaCliente | currency: 'BRL' }}
           </td>
-          <td class="conteudo4">
+          <td class="conteudo4" *ngIf="visualizacaoDasTaxas == 'cliente'">
             <ng-template #valorTxDespesaCliente>
               Valor de desconto da taxa Débito:
               {{ plano.txDebitoJurosCliente | currency: 'BRL' }}
@@ -288,30 +331,32 @@
               {{ plano?.valorTxParcelamentoCliente | currency: 'BRL' }}
             </ng-template>
 
-            <span [tooltip]="valorTxDespesaCliente">{{ plano.valorTxDespesaCliente | currency: 'BRL' }}</span>
+            <span [tooltip]="valorTxDespesaCliente" placement="bottom">{{
+              plano.valorTxDespesaCliente | currency: 'BRL'
+            }}</span>
           </td>
-          <td class="conteudo4">
+          <td class="conteudo4" *ngIf="visualizacaoDasTaxas == 'cliente'">
             {{ plano.valorLiquidoDespesaClientel | currency: 'BRL' }}
           </td>
 
-          <td class="conteudo3">
+          <td class="conteudo3" *ngIf="visualizacaoDasTaxas == 'vendedor'">
             <ng-template #valorVendaDespesaParcelamentoCliente>
               Valor da taxa do parcelamento pelo cliente:
               {{ plano.valorTxParcelamentoCliente | currency: 'BRL' }}
             </ng-template>
-            <span [tooltip]="valorVendaDespesaParcelamentoCliente">
+            <span [tooltip]="valorVendaDespesaParcelamentoCliente" placement="bottom">
               {{ plano.valorVendaDespesaParcelamentoCliente | currency: 'BRL' }}</span
             >
           </td>
-          <td class="conteudo3">
+          <td class="conteudo3" *ngIf="visualizacaoDasTaxas == 'vendedor'">
             {{ plano.valorParcelaDespesaParcelamentoCliente | currency: 'BRL' }}
           </td>
-          <td class="conteudo3">
+          <td class="conteudo3" *ngIf="visualizacaoDasTaxas == 'vendedor'">
             <ng-template #valorLiquidoDespesaIntermediacaoCliente>
-              Valor da taxa de inetemediação pelo vendedor:
+              Valor da taxa de intermediação pelo vendedor:
               {{ plano.valorTxIntermediacaoVendedor | currency: 'BRL' }}
             </ng-template>
-            <span [tooltip]="valorLiquidoDespesaIntermediacaoCliente">
+            <span [tooltip]="valorLiquidoDespesaIntermediacaoCliente" placement="bottom">
               {{ plano.valorLiquidoDespesaIntermediacaoCliente | currency: 'BRL' }}</span
             >
           </td>

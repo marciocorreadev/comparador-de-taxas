@@ -14,6 +14,8 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
   resultados: any[] = [];
   tabela: string = 'todos';
   validForm: boolean = true;
+  tipoTaxaAVista: string = '(1 Dia)';
+  visualizacaoDasTaxas: string = 'vendedor';
 
   private subscriptions: Subscription[] = [];
   constructor(
@@ -27,13 +29,15 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
       this.bkpTaxas[key] = this.taxas[key];
     }
     this.form = this.formBuilder.group({
-      valorTransacao: [0, [Validators.required, Validators.min(0.1)]],
+      valorTransacao: [100, [Validators.required, Validators.min(0.1)]],
       taxaCreditoAVista: [this.taxas.creditoAVista1D],
       planoRecebimento: ['1D'],
-      taxaCreditoParcelado: [this.taxas.creditoParcelado30D],
+      taxaCreditoParcelado2a6: [this.taxas.creditoParcelado2a61D],
+      taxaCreditoParcelado7a12: [this.taxas.creditoParcelado7a121D],
       taxaDebito: [this.taxas.debitoNull],
       taxaParcelamento: [2.99],
       promocao: ['null'],
+      visualizacaoDasTaxas: ['vendedor'],
     });
     this.subscriptions.push(
       this.form.get('taxaDebito').valueChanges.subscribe(value => {
@@ -46,15 +50,25 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
       })
     );
     this.subscriptions.push(
-      this.form.get('taxaCreditoParcelado').valueChanges.subscribe(value => {
-        this.atualizarTxCredParcelado(this.form.get('planoRecebimento').value, value);
+      this.form.get('taxaCreditoParcelado2a6').valueChanges.subscribe(value => {
+        this.atualizarTxCredParcelado2a6(this.form.get('planoRecebimento').value, value);
+        if (this.form.get('taxaCreditoParcelado7a12').value < value) {
+          this.form.get('taxaCreditoParcelado7a12').setValue(value);
+        }
+      })
+    );
+    this.subscriptions.push(
+      this.form.get('taxaCreditoParcelado7a12').valueChanges.subscribe(value => {
+        this.atualizarTxCredParcelado7a12(this.form.get('planoRecebimento').value, value);
       })
     );
     this.subscriptions.push(
       this.form.get('planoRecebimento').valueChanges.subscribe(value => {
-        const credito = this.obterTxCredito(this.form.get('planoRecebimento').value);
-        this.form.get('taxaCreditoParcelado').setValue(credito.parcelado);
+        const credito = this.obterTxCredito(value);
+        this.form.get('taxaCreditoParcelado2a6').setValue(credito.parcelado2a6);
+        this.form.get('taxaCreditoParcelado7a12').setValue(credito.parcelado7a12);
         this.atualizarValorCredAVista(credito.aVista);
+        this.tipoTaxaAVista = credito.tipoTaxaAVista;
       })
     );
     this.subscriptions.push(
@@ -65,11 +79,18 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
         this.atualizarValorCredAVista(credito.aVista);
       })
     );
+    this.subscriptions.push(
+      this.form.get('visualizacaoDasTaxas').valueChanges.subscribe(value => {
+        this.visualizacaoDasTaxas = value;
+        console.log(value);
+      })
+    );
     this.form.get('valorTransacao').valueChanges.subscribe(value => {
       if (value > 0.1) {
         this.form.get('valorTransacao').status == 'VALID' ? (this.validForm = true) : (this.validForm = false);
       }
     });
+    this.calcular(this.form.value);
   }
   atualizarTxDebito(type: string, value: number) {
     return {
@@ -88,10 +109,16 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
       this.taxas.creditoAVista0 = value;
     }
   }
-  atualizarTxCredParcelado(type: string, value: number) {
+  atualizarTxCredParcelado2a6(type: string, value: number) {
     return {
-      '1D': () => (this.taxas.creditoParcelado1D = value),
-      '30D': () => (this.taxas.creditoParcelado30D = value),
+      '1D': () => (this.taxas.creditoParcelado2a61D = value),
+      '30D': () => (this.taxas.creditoParcelado2a630D = value),
+    }[type]();
+  }
+  atualizarTxCredParcelado7a12(type: string, value: number) {
+    return {
+      '1D': () => (this.taxas.creditoParcelado7a121D = value),
+      '30D': () => (this.taxas.creditoParcelado7a1230D = value),
     }[type]();
   }
   atualizarValorCredAVista(value: number) {
@@ -102,12 +129,16 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
   obterTxCredito(type: string) {
     return {
       '1D': {
-        parcelado: this.taxas.creditoParcelado1D,
+        parcelado2a6: this.taxas.creditoParcelado2a61D,
+        parcelado7a12: this.taxas.creditoParcelado7a121D,
         aVista: this.taxas.creditoAVista1D,
+        tipoTaxaAVista: '(1 Dia)',
       },
       '30D': {
-        parcelado: this.taxas.creditoParcelado30D,
+        parcelado2a6: this.taxas.creditoParcelado2a630D,
+        parcelado7a12: this.taxas.creditoParcelado7a1230D,
         aVista: this.taxas.creditoAVista30D,
+        tipoTaxaAVista: '(30 Dias)',
       },
     }[type];
   }
@@ -131,10 +162,12 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
       valorTransacao: 0,
       taxaCreditoAVista: this.taxas.creditoAVista1D,
       planoRecebimento: '1D',
-      taxaCreditoParcelado: this.taxas.creditoParcelado30D,
+      taxaCreditoParcelado2a6: this.taxas.creditoParcelado2a61D,
+      taxaCreditoParcelado7a12: this.taxas.creditoParcelado7a121D,
       taxaDebito: this.taxas.debitoNull,
       taxaParcelamento: 2.99,
       promocao: 'null',
+      visualizacaoDasTaxas: 'vendedor',
     });
     this.resultados = [];
     this.validForm = true;
@@ -174,8 +207,8 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     for (let qtdeParcelas = 2; qtdeParcelas <= 12; qtdeParcelas++) {
       let valorTxParcelamento = this.calcularTxParcelamento(valorTotal, qtdeParcelas, form.taxaParcelamento / 100);
       let p: any = {};
-      p.nome = `Crédito ${qtdeParcelas}x`;
-      p.txIntermediacao = form.taxaCreditoParcelado;
+      p.nome = `Créd. ${qtdeParcelas}x`;
+      p.txIntermediacao = qtdeParcelas <= 6 ? form.taxaCreditoParcelado2a6 : form.taxaCreditoParcelado7a12;
       p.txParcelamento = 100 * (valorTxParcelamento / valorTotal);
       p.txParcelamento = Number(p.txParcelamento.toFixed(2));
       p.txTotal = p.txIntermediacao + p.txParcelamento;
@@ -212,11 +245,12 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     if (this.validForm) {
       this.resultados = [];
       this.calculaAVista(form, 'Débito');
-      this.calculaAVista(form, 'Credito 1x');
+      this.calculaAVista(form, 'Créd. 1x');
       this.calculaParcelado(form);
     } else {
       this.validarFormulario();
       this.el.nativeElement.querySelector('.valorTransacao').focus();
+      this.el.nativeElement.querySelector('.valorTransacao').select();
     }
   }
   ngOnDestroy(): void {
