@@ -4,17 +4,16 @@
       <div class="card-body">
         <form [formGroup]="form">
           <div class="row">
-            <div class="col-md-12"></div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-4">
               <label for="valorTransacao" class="mr-2">Valor da Venda:
                 <i class="fas ml-1 fa-exclamation-triangle"
                   tooltip="Digite aqui o valor da transação, essa informação é obrigatória."></i></label>
-              <span class="alert-erro" *ngIf="!validForm">Informe o Valor da Transação! </span>
+              <span class="alert-erro" *ngIf="!validForm">Valor obrigatório! </span>
               <input onClick="this.focus();this.select()" (blur)="validarFormulario()"
                 [ngClass]="{ 'is-invalid': !validForm }" currencyMask id="valorTransacao" name="valorTransacao"
                 class="form-control form-control-sm valorTransacao" type="text" formControlName="valorTransacao" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-4">
               <label for="planoRecebimento">Plano de Recebimento:
                 <i class="far fa-question-circle"
                   tooltip="Possibilita o recebimento de todo o valor das vendas parceladas em uma única vez (antecipação) ou em parcelas."></i></label>
@@ -24,7 +23,7 @@
                 <option value="30D">30 Dias (Normal em parcelas)</option>
               </select>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-4">
               <label for="taxaDebito">Taxa Débito: <i class="far fa-question-circle"
                   tooltip="Taxa cobrada por vendas a débito."></i></label>
               <input onClick="this.focus();this.select()" id="taxaDebito" name="taxaDebito"
@@ -45,7 +44,7 @@
                 <option value="null">Sem promoção</option>
               </select>
             </div> -->
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-4">
               <label for="taxaCreditoAVista">Taxa Crédito a Vista {{ tipoTaxaAVista }}:
                 <i class="far fa-question-circle" tooltip="Taxa cobrada por vendas em crédito à vista."></i></label>
               <input onClick="this.focus();this.select()" currencyMask [options]="{
@@ -57,7 +56,7 @@
                 formControlName="taxaCreditoAVista" />
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-4">
               <label for="taxaCreditoParcelado2a6">Taxa de Crédito Parcelado 2x a 6x:
                 <i class="far fa-question-circle" tooltip="Taxa cobrada por vendas em crédito parcelado"></i></label>
               <input onClick="this.focus() ; this.select()" id="taxaCreditoParcelado2a6" name="taxaCreditoParcelado2a6"
@@ -68,7 +67,7 @@
                   thousands: ','
                 }" formControlName="taxaCreditoParcelado2a6" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-4">
               <label for="taxaCreditoParcelado7a12">Taxa de Crédito Parcelado 7x a 12x:
                 <i class="far fa-question-circle" tooltip="Taxa cobrada por vendas em crédito parcelado."></i></label>
               <input onClick="this.focus();this.select()" id="taxaCreditoParcelado7a12" name="taxaCreditoParcelado7a12"
@@ -79,9 +78,9 @@
                   thousands: ','
                 }" formControlName="taxaCreditoParcelado7a12" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-4">
               <label for="taxaParcelamento">Taxa de Antecipação/Parcelamento A.M.:
-                <i class="far fa-question-circle"
+                <i class="far fa-question-circle "
                   tooltip="Taxa cobrada em cada parcela por vendas em crédito parcelado."></i></label>
               <input onClick="this.focus();this.select()" id="taxaParcelamento" name="taxaParcelamento"
                 class="form-control form-control-sm" type="text" currencyMask [options]="{
@@ -91,7 +90,7 @@
                   thousands: ','
                 }" formControlName="taxaParcelamento" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-3">
               <label for="visualizacaoDasTaxas">Tipo de Visão das Taxas:
                 <i class="far fa-question-circle"
                   tooltip="Tipo de visão das taxas na tabela que irá ser gerada."></i></label>
@@ -101,14 +100,13 @@
                 <option value="cliente">Cliente</option>
               </select>
             </div>
-            <div class="col-md-6"></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-2 limpar">
+            <div class="col-md-6" *ngIf="width < 992"></div>
+            <div class="col-md-3 col-lg-2 limpar">
               <button type="button" (click)="limpar()" class="btn btn-secondary btn-block btn-sm">
                 Limpar
               </button>
             </div>
-            <div class="col-md-3 calcular">
+            <div class="col-md-3 col-lg-3 calcular">
               <button type="button" class="btn btn-primary btn-block" (click)="calcular(form.value)">
                 Cálcular
               </button>

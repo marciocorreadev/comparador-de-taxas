@@ -3,6 +3,8 @@
   color: var(--yellow);
 }
 .col-md-6,
+.col-md-4,
+.col-md-3,
 .limpar {
   margin-top: 5px;
 }
@@ -20,11 +22,12 @@
   color: var(--blue);
 }
 label {
-  font-weight: 500;
   font-size: 14px;
-}
-label[for='valorTransacao'] {
   font-weight: 600;
+}
+
+label[for='valorTransacao'] {
+  font-size: 13px;
 }
 .alert-erro {
   color: var(--red);
@@ -35,7 +38,7 @@ button:disabled {
 }
 /* TABELA */
 div table * {
-  font-size: 14px;
+  font-size: 15px;
 }
 table thead tr .titulo1 {
   background-color: #888a8bf8;
@@ -55,14 +58,15 @@ table thead tr * {
   font-size: 14px;
 }
 i,
-table tbody tr .conteudo1:nth-child(2),
+
+/* table tbody tr .conteudo1:nth-child(2),
 table tbody tr .conteudo2:nth-child(5),
 table tbody tr .conteudo4:nth-child(9),
 table tbody tr .conteudo3:nth-child(11),
 table tbody tr .conteudo3:nth-child(13),
 table thead tr {
   cursor: help;
-}
+} */
 
 table thead tr .subtitulo1 span,
 table thead tr .subtitulo2 span,
@@ -171,11 +175,16 @@ section {
   }
 }
 @media (min-width: 720px) {
-  .limpar,
+  .limpar {
+    padding-top: 29px;
+  }
   .calcular {
-    padding-top: 31px;
+    padding-top: 26px;
   }
   .alert-erro {
     display: inline;
+  }
+  label {
+    font-size: 12px;
   }
 }
