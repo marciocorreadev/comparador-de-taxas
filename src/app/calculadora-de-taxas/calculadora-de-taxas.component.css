@@ -1,12 +1,11 @@
+/* FORMULARIO */
 .fa-exclamation-triangle {
   color: var(--yellow);
 }
-
 .col-md-6,
 .limpar {
   margin-top: 5px;
 }
-
 .limpar,
 .calcular {
   padding-top: 10px;
@@ -15,35 +14,29 @@
 .calcular {
   font-size: 12px;
 }
-
 .calcular:hover {
   transform: scale(1.05);
   transition: 0.2s;
   color: var(--blue);
 }
-
 label {
-  font-weight: 599;
+  font-weight: 500;
   font-size: 14px;
 }
-
 label[for='valorTransacao'] {
   font-weight: 600;
 }
-
-div table * {
-  font-size: 14px;
-}
-
 .alert-erro {
   color: var(--red);
   display: block;
 }
-
 button:disabled {
   cursor: no-drop;
 }
-
+/* TABELA */
+div table * {
+  font-size: 14px;
+}
 table thead tr .titulo1 {
   background-color: #888a8bf8;
 }
@@ -56,13 +49,11 @@ table thead tr .titulo4 {
 table thead tr .titulo3 {
   background-color: #964980;
 }
-
 table thead tr * {
   color: white;
   font-weight: 500;
   font-size: 14px;
 }
-
 i,
 table tbody tr .conteudo1:nth-child(2),
 table tbody tr .conteudo2:nth-child(5),
@@ -123,15 +114,12 @@ section table tbody tr td.titulo-plano {
   font-size: 12px;
   font-weight: bold;
 }
-
 .customClass {
   background-color: #964980;
 }
-
 :host >>> .tooltip-inner {
   font-size: 12px;
 }
-
 :host >>> .tooltip-inner {
   border: 2px solid black;
   background-color: var(--dark);
@@ -144,7 +132,6 @@ section table tbody tr td.titulo-plano {
   border-top-color: black;
   border-bottom-color: black;
 }
-
 section {
   box-shadow: 0px 0px 2px var(--dark);
   /* border-radius: 5px; */
@@ -157,7 +144,6 @@ section {
 #dadosTabela:hidden {
   transition: all 0.3s ease;
 }
-
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   height: 5px;
