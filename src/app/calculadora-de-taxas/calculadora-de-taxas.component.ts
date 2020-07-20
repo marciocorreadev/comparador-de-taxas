@@ -267,7 +267,7 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
       }, 300);
     } else {
       this.validarFormulario();
-      this.el.nativeElement.querySelector('.valorTransacao').select();
+      this.el.nativeElement.querySelector('.valorTransacao').focus();
     }
   }
 

@@ -9,9 +9,10 @@
                 <i class="fas ml-1 fa-exclamation-triangle"
                   tooltip="Digite aqui o valor da transação, essa informação é obrigatória."></i></label>
               <span class="alert-erro" *ngIf="!validForm">Valor obrigatório! </span>
-              <input onClick="this.select()" (blur)="validarFormulario()" [ngClass]="{ 'is-invalid': !validForm }"
-                currencyMask id="valorTransacao" name="valorTransacao"
-                class="form-control form-control-sm valorTransacao" type="text" formControlName="valorTransacao" />
+              <input onClick="this.select() " inputmode="numeric" (blur)="validarFormulario()"
+                [ngClass]="{ 'is-invalid': !validForm }" currencyMask id="valorTransacao" name="valorTransacao"
+                class="form-control form-control-sm valorTransacao" type="text" formControlName="valorTransacao"
+                autofocus />
             </div>
             <div class="col-md-6 col-lg-4">
               <label for="planoRecebimento">Plano de Recebimento:
@@ -26,8 +27,8 @@
             <div class="col-md-6 col-lg-4">
               <label for="taxaDebito">Taxa Débito: <i class="far fa-question-circle"
                   tooltip="Taxa cobrada por vendas a débito."></i></label>
-              <input onClick="this.select()" id="taxaDebito" name="taxaDebito" class="form-control form-control-sm"
-                type="text" currencyMask [options]="{
+              <input onClick="this.select()" inputmode="numeric" id="taxaDebito" name="taxaDebito"
+                class="form-control form-control-sm" type="text" currencyMask [options]="{
                   decimal: '.',
                   prefix: '',
                   suffix: ' %',
@@ -47,7 +48,7 @@
             <div class="col-md-6 col-lg-4">
               <label for="taxaCreditoAVista">Taxa Crédito a Vista {{ tipoTaxaAVista }}:
                 <i class="far fa-question-circle" tooltip="Taxa cobrada por vendas em crédito à vista."></i></label>
-              <input onClick="this.select()" currencyMask [options]="{
+              <input onClick="this.select()" inputmode="numeric" currencyMask [options]="{
                   decimal: '.',
                   prefix: '',
                   suffix: ' %',
@@ -59,8 +60,8 @@
             <div class="col-md-6 col-lg-4">
               <label for="taxaCreditoParcelado2a6">Taxa de Crédito Parcelado 2x a 6x:
                 <i class="far fa-question-circle" tooltip="Taxa cobrada por vendas em crédito parcelado"></i></label>
-              <input onClick="this.focus() ; this.select()" id="taxaCreditoParcelado2a6" name="taxaCreditoParcelado2a6"
-                class="form-control form-control-sm" type="text" currencyMask [options]="{
+              <input onClick="this.select()" inputmode="numeric" id="taxaCreditoParcelado2a6"
+                name="taxaCreditoParcelado2a6" class="form-control form-control-sm" type="text" currencyMask [options]="{
                   decimal: '.',
                   prefix: '',
                   suffix: ' %',
@@ -70,8 +71,8 @@
             <div class="col-md-6 col-lg-4">
               <label for="taxaCreditoParcelado7a12">Taxa de Crédito Parcelado 7x a 12x:
                 <i class="far fa-question-circle" tooltip="Taxa cobrada por vendas em crédito parcelado."></i></label>
-              <input onClick="this.select()" id="taxaCreditoParcelado7a12" name="taxaCreditoParcelado7a12"
-                class="form-control form-control-sm" type="text" currencyMask [options]="{
+              <input onClick="this.select()" inputmode="numeric" id="taxaCreditoParcelado7a12"
+                name="taxaCreditoParcelado7a12" class="form-control form-control-sm" type="text" currencyMask [options]="{
                   decimal: '.',
                   prefix: '',
                   suffix: ' %',
@@ -82,7 +83,7 @@
               <label for="taxaParcelamento">Taxa de Antecipação/Parcelamento A.M.:
                 <i class="far fa-question-circle "
                   tooltip="Taxa cobrada em cada parcela por vendas em crédito parcelado."></i></label>
-              <input onClick="this.select()" id="taxaParcelamento" name="taxaParcelamento"
+              <input onClick="this.select()" inputmode="numeric" id="taxaParcelamento" name="taxaParcelamento"
                 class="form-control form-control-sm" type="text" currencyMask [options]="{
                   decimal: '.',
                   prefix: '',
