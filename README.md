@@ -1,4 +1,4 @@
-# calculadora-de-taxas1.0
+# calculadora-de-taxas
 
 ##### Calculadora para gerar taxas de operações de cartões de crédito e débito usando Angular@8.1.0
 
