@@ -4,7 +4,7 @@
 
 ## Confira o resultado aqui:
 
-http://app.calculadora-taxas.com.br.s3-website-sa-east-1.amazonaws.com/
+http://calculadora-de-taxas.s3-website-sa-east-1.amazonaws.com/
 
 ## Calculadora
 
