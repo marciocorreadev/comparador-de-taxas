@@ -54,9 +54,9 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.form.get('taxaCreditoParcelado2a6').valueChanges.subscribe(value => {
         this.atualizarTxCredParcelado2a6(this.form.get('planoRecebimento').value, value);
-        if (this.form.get('taxaCreditoParcelado7a12').value < value) {
-          this.form.get('taxaCreditoParcelado7a12').setValue(value);
-        }
+        // if (this.form.get('taxaCreditoParcelado7a12').value < value) {
+        this.form.get('taxaCreditoParcelado7a12').setValue(value);
+        // }
       })
     );
     this.subscriptions.push(
@@ -84,6 +84,9 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.form.get('visualizacaoDasTaxas').valueChanges.subscribe(value => {
         this.visualizacaoDasTaxas = value;
+        setTimeout(() => {
+          window.scroll({ top: 700, behavior: 'smooth' });
+        }, 300);
       })
     );
     this.form.get('valorTransacao').valueChanges.subscribe(value => {
