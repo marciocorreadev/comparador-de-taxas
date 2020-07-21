@@ -26,9 +26,6 @@ label {
   font-weight: 600;
 }
 
-label[for='valorTransacao'] {
-  font-size: 13px;
-}
 .alert-erro {
   color: var(--red);
   display: block;

@@ -9,10 +9,10 @@
                 <i class="fas ml-1 fa-exclamation-triangle"
                   tooltip="Digite aqui o valor da transação, essa informação é obrigatória."></i></label>
               <span class="alert-erro" *ngIf="!validForm">Valor obrigatório! </span>
-              <input onClick="this.select() " inputmode="numeric" (blur)="validarFormulario()"
-                [ngClass]="{ 'is-invalid': !validForm }" currencyMask id="valorTransacao" name="valorTransacao"
-                class="form-control form-control-sm valorTransacao" type="text" formControlName="valorTransacao"
-                autofocus />
+              <input onClick="this.selectall()" inputmode="numeric" (blur)="validarFormulario()"
+                [ngClass]="{ 'is-invalid': !validForm }" type="tel" currencyMask id="valorTransacao"
+                name="valorTransacao" class="form-control form-control-sm valorTransacao" type="text"
+                formControlName="valorTransacao" autofocus />
             </div>
             <div class="col-md-6 col-lg-4">
               <label for="planoRecebimento">Plano de Recebimento:
@@ -357,11 +357,11 @@
         </tbody>
       </table>
     </section>
-    <p class="obs ml-2" [hidden]="width > 576" class="container">
+    <p class="obs ml-2" [hidden]="!mobile">
       <i class="fas fa-info-circle"></i>
       Clique sobre a taxa ou valor para mais detalhes.
     </p>
-    <p class="obs" [hidden]="width <= 576" class="container">
+    <p class="obs" [hidden]="mobile">
       <i class="fas fa-info-circle mr-2"></i>Passe o mouse sobre sobre a taxa ou valor para mais detalhes.
     </p>
   </div>

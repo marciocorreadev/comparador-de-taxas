@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy, ElementRef, ɵConsole } from '@angular/co
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
+import { isMobile } from 'is-mobile';
 @Component({
   selector: 'app-calculadora-de-taxas',
   templateUrl: './calculadora-de-taxas.component.html',
@@ -18,6 +19,7 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
   tipoTaxaAVista: string = '(1 Dia)';
   visualizacaoDasTaxas: string = 'vendedor';
   width: number = document.querySelector('body').scrollWidth;
+  mobile: boolean = isMobile();
 
   private subscriptions: Subscription[] = [];
   constructor(
@@ -295,6 +297,7 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
 
   getWidth() {
     this.width = document.querySelector('body').scrollWidth;
+    this.mobile = isMobile();
   }
 
   ngOnDestroy(): void {
