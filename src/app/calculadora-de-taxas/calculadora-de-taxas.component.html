@@ -9,7 +9,7 @@
                 <i class="fas ml-1 fa-exclamation-triangle"
                   tooltip="Digite aqui o valor da transação, essa informação é obrigatória."></i></label>
               <span class="alert-erro" *ngIf="!validForm">Valor obrigatório! </span>
-              <input onClick="this.selectall()" inputmode="numeric" (blur)="validarFormulario()"
+              <input onClick="this.select()" inputmode="numeric" (blur)="validarFormulario()"
                 [ngClass]="{ 'is-invalid': !validForm }" type="tel" currencyMask id="valorTransacao"
                 name="valorTransacao" class="form-control form-control-sm valorTransacao" type="text"
                 formControlName="valorTransacao" autofocus />

@@ -36,7 +36,7 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     }
 
     this.form = this.formBuilder.group({
-      valorTransacao: [100, [Validators.required, Validators.min(0.1)]],
+      valorTransacao: [0, [Validators.required, Validators.min(0.1)]],
       taxaCreditoAVista: [this.taxas.creditoAVista1D],
       planoRecebimento: ['1D'],
       taxaCreditoParcelado2a6: [this.taxas.creditoParcelado2a61D],
@@ -107,7 +107,6 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
         this.form.get('valorTransacao').status == 'VALID' ? (this.validForm = true) : (this.validForm = false);
       }
     });
-    this.calcular(this.form.value);
   }
 
   atualizarTxDebito(type: string, value: number) {
@@ -282,7 +281,7 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
         this.taxas[key] = this.bkpTaxas[key];
       }
       this.form.setValue({
-        valorTransacao: 100,
+        valorTransacao: 0,
         taxaCreditoAVista: this.taxas.creditoAVista1D,
         planoRecebimento: '1D',
         taxaCreditoParcelado2a6: this.taxas.creditoParcelado2a61D,
@@ -300,10 +299,6 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
   getWidth() {
     this.width = document.querySelector('body').scrollWidth;
     this.mobile = isMobile();
-  }
-  tooltip(e, pop) {
-    console.log(e);
-    // pop.hide();
   }
 
   ngOnDestroy(): void {
