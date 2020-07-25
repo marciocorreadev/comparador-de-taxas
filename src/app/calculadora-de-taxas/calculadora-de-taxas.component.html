@@ -1,4 +1,5 @@
-<div (window:resize)="getWidth()">
+<div (window:resize)="getWidth()" (window:scroll)="removerTooltip($event)" (window:scroll)="getWidth()"
+  (window:click)="addTooltip()">
   <div class="container mt-3">
     <div class="card card-principal">
       <div class="card-body">
@@ -103,7 +104,7 @@
             </div>
             <div class="col-md-6" *ngIf="width < 992"></div>
             <div class="col-md-3 col-lg-2 limpar">
-              <button type="button" (click)="limpar()" class="btn btn-secondary btn-block btn-sm">
+              <button type="button" (click)="limpar()" class="btn btn-secondary btn-block btn-sm ">
                 Limpar
               </button>
             </div>
@@ -118,7 +119,7 @@
     </div>
   </div>
   <div id="dadosTabela" [class.container]="width > 767" [hidden]="resultados.length <= 0">
-    <section class="table-responsive mt-3 mb-3">
+    <section class="table-responsive mt-3 mb-3" (scroll)="removerTooltip($event)">
       <table class="table table-bordered table-hover table-sm text-center mb-0">
         <thead>
           <tr>
@@ -216,7 +217,7 @@
               <ng-template #txParcelamento>
                 Taxa de Parcelamento ao mês: {{ plano?.txParcelamento / 100 | percent: '1.2' }}
               </ng-template>
-              <span container="div" [tooltip]="txParcelamento">
+              <span container="div" [tooltip]="txParcelamento" triggers="hover:!hover">
                 {{ plano?.txParcelamento / 100 | percent: '1.2-3' }}</span>
             </td>
             <td class="conteudo1">
