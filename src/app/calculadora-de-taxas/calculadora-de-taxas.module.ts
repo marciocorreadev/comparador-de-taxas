@@ -19,7 +19,9 @@ export const customCurrencyMaskConfig = {
   prefix: 'R$ ',
   suffix: '',
   thousands: '.',
-  nullable: false,
+  nullable: true,
+
+  inputMode: CurrencyMaskInputMode.FINANCIAL,
 };
 
 @NgModule({

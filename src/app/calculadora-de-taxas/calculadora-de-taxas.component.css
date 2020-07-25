@@ -21,8 +21,10 @@
   transition: 0.2s;
   color: var(--blue);
 }
-label {
-  font-size: 14px;
+label,
+.alert-erro,
+obs {
+  font-size: 15px;
   font-weight: 600;
 }
 
@@ -181,7 +183,9 @@ section {
   .alert-erro {
     display: inline;
   }
-  label {
+  label,
+  .alert-erro,
+  .obs {
     font-size: 12px;
   }
 }
