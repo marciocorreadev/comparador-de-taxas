@@ -348,26 +348,14 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     }
     this.form.setValue({
       valorTransacao: 0,
-      planoRecebimento: localStorage.getItem('planoRecebimento') || '1D',
-      taxaCreditoAVista:
-        localStorage.getItem('planoRecebimento') == '30D'
-          ? localStorage.getItem('creditoAVista30D') || this.taxas.creditoAVista30D
-          : localStorage.getItem('creditoAVista1D') || this.taxas.creditoAVista1D,
-
-      taxaCreditoParcelado2a6:
-        localStorage.getItem('planoRecebimento') == '30D'
-          ? localStorage.getItem('creditoParcelado2a630D') || this.taxas.creditoParcelado2a630D
-          : localStorage.getItem('creditoParcelado2a61D') || this.taxas.creditoParcelado2a61D,
-
-      taxaCreditoParcelado7a12:
-        localStorage.getItem('planoRecebimento') == '30D'
-          ? localStorage.getItem('CreditoParcelado7a1230D') || this.taxas.creditoParcelado7a1230D
-          : localStorage.getItem('CreditoParcelado7a121D') || this.taxas.creditoParcelado7a121D,
-
-      taxaDebito: this.taxas.debitoNull,
-      taxaParcelamento: localStorage.getItem('taxaParcelamento') || 2.99,
+      planoRecebimento: '1D',
+      taxaCreditoAVista: 0,
+      taxaCreditoParcelado2a6: 0,
+      taxaCreditoParcelado7a12: 0,
+      taxaDebito: 0,
+      taxaParcelamento: 0,
       promocao: 'null',
-      visualizacaoDasTaxas: localStorage.getItem('visualizacaoDasTaxas') || 'vendedor',
+      visualizacaoDasTaxas: 'vendedor',
     });
   }
 
