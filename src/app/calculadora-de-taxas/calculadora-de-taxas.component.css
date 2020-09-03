@@ -21,9 +21,10 @@
 }
 .calcular {
   font-size: 12px;
+  color: var(--blue);
 }
 div.calcular:hover {
-  transform: scale(1.03);
+  /* transform: scale(1.03); */
   transition: 0.1s;
   color: var(--blue);
 }
