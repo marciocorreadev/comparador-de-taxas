@@ -56,7 +56,7 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
           : localStorage.getItem('CreditoParcelado7a121D') || this.taxas.creditoParcelado7a121D,
       ],
       taxaDebito: [this.taxas.debitoNull],
-      taxaParcelamento: [localStorage.getItem('taxaParcelamento') || 2.99],
+      taxaParcelamento: [localStorage.getItem('taxaParcelamento') || 0],
       promocao: ['null'],
       visualizacaoDasTaxas: [localStorage.getItem('visualizacaoDasTaxas') || 'vendedor'],
     });
