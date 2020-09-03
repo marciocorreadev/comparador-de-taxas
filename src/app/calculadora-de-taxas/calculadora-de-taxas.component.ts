@@ -1,7 +1,7 @@
 /** @format */
 
 import { CalculadoraDeTaxasService } from './calculadora-de-taxas.service';
-import { Component, OnInit, OnDestroy, ElementRef, ɵConsole } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -39,16 +39,38 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
 
     this.form = this.formBuilder.group({
       valorTransacao: [0, [Validators.required, Validators.min(0.1)]],
-      taxaCreditoAVista: [this.taxas.creditoAVista1D],
-      planoRecebimento: ['1D'],
-      taxaCreditoParcelado2a6: [this.taxas.creditoParcelado2a61D],
-      taxaCreditoParcelado7a12: [this.taxas.creditoParcelado7a121D],
+      planoRecebimento: [localStorage.getItem('planoRecebimento') || '1D'],
+      taxaCreditoAVista: [
+        localStorage.getItem('planoRecebimento') == '30D'
+          ? localStorage.getItem('creditoAVista30D') || this.taxas.creditoAVista30D
+          : localStorage.getItem('creditoAVista1D') || this.taxas.creditoAVista1D,
+      ],
+      taxaCreditoParcelado2a6: [
+        localStorage.getItem('planoRecebimento') == '30D'
+          ? localStorage.getItem('creditoParcelado2a630D') || this.taxas.creditoParcelado2a630D
+          : localStorage.getItem('creditoParcelado2a61D') || this.taxas.creditoParcelado2a61D,
+      ],
+      taxaCreditoParcelado7a12: [
+        localStorage.getItem('planoRecebimento') == '30D'
+          ? localStorage.getItem('CreditoParcelado7a1230D') || this.taxas.creditoParcelado7a1230D
+          : localStorage.getItem('CreditoParcelado7a121D') || this.taxas.creditoParcelado7a121D,
+      ],
       taxaDebito: [this.taxas.debitoNull],
-      taxaParcelamento: [2.99],
+      taxaParcelamento: [localStorage.getItem('taxaParcelamento') || 2.99],
       promocao: ['null'],
-      visualizacaoDasTaxas: ['vendedor'],
+      visualizacaoDasTaxas: [localStorage.getItem('visualizacaoDasTaxas') || 'vendedor'],
     });
 
+    this.subscriptions.push(
+      this.form.get('visualizacaoDasTaxas').valueChanges.subscribe((value) => {
+        localStorage.setItem('visualizacaoDasTaxas', value);
+      })
+    );
+    this.subscriptions.push(
+      this.form.get('taxaParcelamento').valueChanges.subscribe((value) => {
+        localStorage.setItem('taxaParcelamento', value);
+      })
+    );
     this.subscriptions.push(
       this.form.get('taxaDebito').valueChanges.subscribe((value) => {
         this.atualizarTxDebito(this.form.get('promocao').value, value);
@@ -78,6 +100,7 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.form.get('planoRecebimento').valueChanges.subscribe((value) => {
+        localStorage.setItem('planoRecebimento', value);
         const credito = this.obterTxCredito(value);
         this.form.get('taxaCreditoParcelado2a6').setValue(credito.parcelado2a6);
         this.form.get('taxaCreditoParcelado7a12').setValue(credito.parcelado7a12);
@@ -99,7 +122,7 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
       this.form.get('visualizacaoDasTaxas').valueChanges.subscribe((value) => {
         this.visualizacaoDasTaxas = value;
         setTimeout(() => {
-          window.scroll({ top: 700, behavior: 'smooth' });
+          // window.scroll({ top: 700, behavior: 'smooth' });
         }, 300);
       })
     );
@@ -115,34 +138,57 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
 
   atualizarTxDebito(type: string, value: number) {
     return {
-      '0': () => (this.taxas.debito0 = value),
-      '199': () => (this.taxas.debito199 = value),
-      null: () => (this.taxas.debitoNull = value),
+      '0': () => ((this.taxas.debito0 = value), localStorage.setItem('debito0', value.toString())),
+      '199': () => (
+        (this.taxas.debito199 = value), localStorage.setItem('debito199', value.toString())
+      ),
+      null: () => (
+        (this.taxas.debitoNull = value), localStorage.setItem('debitoNull', value.toString())
+      ),
     }[type]();
   }
 
   atualizarTxCredAVista(type: string, value: number) {
     if (this.form.get('promocao').value != '0') {
       return {
-        '1D': () => (this.taxas.creditoAVista1D = value),
-        '30D': () => (this.taxas.creditoAVista30D = value),
+        '1D': () => (
+          (this.taxas.creditoAVista1D = value),
+          localStorage.setItem('creditoAVista1D', value.toString())
+        ),
+        '30D': () => (
+          (this.taxas.creditoAVista30D = value),
+          localStorage.setItem('creditoAVista30D', value.toString())
+        ),
       }[type]();
     } else {
       this.taxas.creditoAVista0 = value;
+      localStorage.setItem('creditoAVista0', value.toString());
     }
   }
 
   atualizarTxCredParcelado2a6(type: string, value: number) {
     return {
-      '1D': () => (this.taxas.creditoParcelado2a61D = value),
-      '30D': () => (this.taxas.creditoParcelado2a630D = value),
+      '1D': () => (
+        (this.taxas.creditoParcelado2a61D = value),
+        localStorage.setItem('creditoParcelado2a61D', value.toString())
+      ),
+      '30D': () => (
+        (this.taxas.creditoParcelado2a630D = value),
+        localStorage.setItem('creditoParcelado2a630D', value.toString())
+      ),
     }[type]();
   }
 
   atualizarTxCredParcelado7a12(type: string, value: number) {
     return {
-      '1D': () => (this.taxas.creditoParcelado7a121D = value),
-      '30D': () => (this.taxas.creditoParcelado7a1230D = value),
+      '1D': () => (
+        (this.taxas.creditoParcelado7a121D = value),
+        localStorage.setItem('creditoParcelado7a121D', value.toString())
+      ),
+      '30D': () => (
+        (this.taxas.creditoParcelado7a1230D = value),
+        localStorage.setItem('creditoParcelado7a1230D', value.toString())
+      ),
     }[type]();
   }
 
@@ -235,7 +281,9 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
 
       p.qtdeParcelas = qtdeParcelas;
       p.txIntermediacao =
-        qtdeParcelas <= 6 ? form.taxaCreditoParcelado2a6 : form.taxaCreditoParcelado7a12;
+        qtdeParcelas <= 6
+          ? parseFloat(form.taxaCreditoParcelado2a6)
+          : parseFloat(form.taxaCreditoParcelado7a12);
       p.txParcelamento = 100 * (valorTxParcelamento / valorTotal);
       p.txParcelamento = Number(p.txParcelamento.toFixed(2));
       p.txTotal = p.txIntermediacao + p.txParcelamento;
@@ -267,20 +315,8 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
     for (let i = 1; i <= qtdeParcelas; i++) {
       valorTaxaParcelamento =
         valorTaxaParcelamento + valorParcelamento / Math.pow(1 + txParcelamento, i);
-      console.log(
-        valorParcelamento,
-        Math.pow(1 + txParcelamento, i),
-        valorParcelamento / Math.pow(1 + txParcelamento, i)
-      );
     }
-    console.log(
-      'Valor Venda:',
-      valorVenda,
-      'valor Taxa parParcelamento:',
-      valorTaxaParcelamento,
-      'valor Final',
-      valorVenda - valorTaxaParcelamento
-    );
+
     return valorVenda - valorTaxaParcelamento;
   }
 
@@ -292,9 +328,10 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
       this.calculaAVista(form, 'Déb.');
       this.calculaAVista(form, '1x');
       this.calculaParcelado(form);
-      setTimeout(() => {
-        window.scroll({ top: 700, behavior: 'smooth' });
-      }, 300);
+
+      // setTimeout(() => {
+      // window.scroll({ top: 700, behavior: 'smooth' });
+      // }, 300);
     } else {
       this.validarFormulario();
       this.el.nativeElement.querySelector('.valorTransacao').focus();
@@ -302,25 +339,41 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
   }
 
   limpar() {
-    window.scroll({ top: 0, behavior: 'smooth' });
-    setTimeout(() => {
-      for (const key in this.taxas) {
-        this.taxas[key] = this.bkpTaxas[key];
-      }
-      this.form.setValue({
-        valorTransacao: 0,
-        taxaCreditoAVista: this.taxas.creditoAVista1D,
-        planoRecebimento: '1D',
-        taxaCreditoParcelado2a6: this.taxas.creditoParcelado2a61D,
-        taxaCreditoParcelado7a12: this.taxas.creditoParcelado7a121D,
-        taxaDebito: this.taxas.debitoNull,
-        taxaParcelamento: 2.99,
-        promocao: 'null',
-        visualizacaoDasTaxas: 'vendedor',
-      });
-      this.resultados = [];
-      this.validForm = true;
-    }, 300);
+    // window.scroll({ top: 0, behavior: 'smooth' });
+    this.resultados = [];
+    this.validForm = true;
+    this.el.nativeElement.querySelector('.valorTransacao').focus();
+    for (const key in this.taxas) {
+      this.taxas[key] = this.bkpTaxas[key];
+    }
+    this.form.setValue({
+      valorTransacao: 0,
+      planoRecebimento: localStorage.getItem('planoRecebimento') || '1D',
+      taxaCreditoAVista:
+        localStorage.getItem('planoRecebimento') == '30D'
+          ? localStorage.getItem('creditoAVista30D') || this.taxas.creditoAVista30D
+          : localStorage.getItem('creditoAVista1D') || this.taxas.creditoAVista1D,
+
+      taxaCreditoParcelado2a6:
+        localStorage.getItem('planoRecebimento') == '30D'
+          ? localStorage.getItem('creditoParcelado2a630D') || this.taxas.creditoParcelado2a630D
+          : localStorage.getItem('creditoParcelado2a61D') || this.taxas.creditoParcelado2a61D,
+
+      taxaCreditoParcelado7a12:
+        localStorage.getItem('planoRecebimento') == '30D'
+          ? localStorage.getItem('CreditoParcelado7a1230D') || this.taxas.creditoParcelado7a1230D
+          : localStorage.getItem('CreditoParcelado7a121D') || this.taxas.creditoParcelado7a121D,
+
+      taxaDebito: this.taxas.debitoNull,
+      taxaParcelamento: localStorage.getItem('taxaParcelamento') || 2.99,
+      promocao: 'null',
+      visualizacaoDasTaxas: localStorage.getItem('visualizacaoDasTaxas') || 'vendedor',
+    });
+  }
+
+  recalcular() {
+    this.resultados = [];
+    this.validForm = true;
     this.el.nativeElement.querySelector('.valorTransacao').focus();
   }
 

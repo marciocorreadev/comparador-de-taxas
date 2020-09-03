@@ -1,40 +1,48 @@
-/* FORMULARIO */
+/**
+ * /* FORMULARIO
+ *
+ * @format
+ */
+
 .fa-exclamation-triangle {
   color: var(--yellow);
 }
+
 .col-md-6,
 .col-md-4,
 .col-md-3,
 .limpar {
-  margin-top: 5px;
+  padding-top: 3px;
 }
 .limpar,
 .calcular {
   padding-top: 10px;
-  transition: 0.2s;
+  /* transition: 0.1s; */
 }
 .calcular {
   font-size: 12px;
 }
-.calcular:hover {
-  transform: scale(1.05);
-  transition: 0.2s;
+div.calcular:hover {
+  transform: scale(1.03);
+  transition: 0.1s;
   color: var(--blue);
 }
 label,
-.alert-erro,
-obs {
-  font-size: 15px;
+.alert-erro {
+  font-size: 16px;
   font-weight: 600;
 }
-
 .alert-erro {
+  position: absolute;
+  top: 5px;
+  right: 15px;
   color: var(--red);
   display: block;
 }
 button:disabled {
   cursor: no-drop;
 }
+
 /* TABELA */
 div table * {
   font-size: 15px;
@@ -56,16 +64,6 @@ table thead tr * {
   font-weight: 500;
   font-size: 14px;
 }
-i,
-
-/* table tbody tr .conteudo1:nth-child(2),
-table tbody tr .conteudo2:nth-child(5),
-table tbody tr .conteudo4:nth-child(9),
-table tbody tr .conteudo3:nth-child(11),
-table tbody tr .conteudo3:nth-child(13),
-table thead tr {
-  cursor: help;
-} */
 
 table thead tr .subtitulo1 span,
 table thead tr .subtitulo2 span,
@@ -92,16 +90,6 @@ table tbody tr:nth-child(odd) {
 table tbody tr:nth-child(even) {
   background-color: #d9dddd;
 }
-
-/* table tbody tr .conteudo2 {
-  background-color: #e4e8f1;
-}
-table tbody tr .conteudo4 {
-  background-color: #eee6dd;
-}
-table tbody tr .conteudo3 {
-  background-color: #ecd7e8;
-} */
 
 div section table tbody tr * {
   font-size: 14px;
@@ -166,6 +154,9 @@ section {
 .fa-info-circle {
   color: var(--maq);
 }
+.all-table {
+  height: 600px;
+}
 
 @media (min-width: 376px) {
   ::-webkit-scrollbar {
@@ -173,19 +164,32 @@ section {
     height: 8px;
   }
 }
-@media (min-width: 720px) {
-  .limpar {
-    padding-top: 29px;
+@media (min-width: 768px) {
+  .top-form {
+    padding-top: 90px !important;
   }
-  .calcular {
-    padding-top: 26px;
+  .limpar {
+    padding-top: 14px;
   }
   .alert-erro {
     display: inline;
+    top: 9px;
   }
   label,
   .alert-erro,
   .obs {
     font-size: 12px;
+  }
+}
+
+@media (min-width: 992px) {
+  .top-form {
+    padding-top: 170px !important;
+  }
+  .limpar {
+    padding-top: 36px;
+  }
+  .calcular {
+    padding-top: 32px;
   }
 }
