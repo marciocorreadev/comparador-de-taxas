@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class CalculadoraDeTaxasService {
+export class comparadorDeTaxasService {
   taxas: any = {
     creditoParcelado2a61D: localStorage.getItem('creditoParcelado2a61D') || 0,
     creditoParcelado2a630D: localStorage.getItem('creditoParcelado2a630D') || 0,

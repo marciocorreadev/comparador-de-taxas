@@ -1,17 +1,17 @@
 /** @format */
 
-import { CalculadoraDeTaxasService } from './calculadora-de-taxas.service';
+import { comparadorDeTaxasService } from '../comparador-de-taxas.service';
 import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { isMobile } from 'is-mobile';
 @Component({
-  selector: 'app-calculadora-de-taxas',
-  templateUrl: './calculadora-de-taxas.component.html',
-  styleUrls: ['./calculadora-de-taxas.component.css'],
+  selector: 'calculadora-tabela',
+  templateUrl: './calculadora-tabela.component.html',
+  styleUrls: ['./calculadora-tabela.component.css'],
 })
-export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
+export class calculadoraTabelaComponent implements OnInit, OnDestroy {
   form: FormGroup;
   taxas: any = {};
   bkpTaxas: any = {};
@@ -27,7 +27,7 @@ export class CalculadoraDeTaxasComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   constructor(
     private formBuilder: FormBuilder,
-    private taxasService: CalculadoraDeTaxasService,
+    private taxasService: comparadorDeTaxasService,
     private el: ElementRef
   ) {}
   ngOnInit() {

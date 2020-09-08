@@ -1,12 +1,15 @@
+/** @format */
+
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CalculadoraDeTaxasService } from './calculadora-de-taxas.service';
+import { comparadorDeTaxasService } from './comparador-de-taxas.service';
 import localePt from '@angular/common/locales/pt';
 import { NgxCurrencyModule, CurrencyMaskInputMode } from 'ngx-currency';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { registerLocaleData } from '@angular/common';
-import { CalculadoraDeTaxasComponent } from './calculadora-de-taxas.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { calculadoraTabelaComponent } from './calculadora-tabela/calculadora-tabela.component';
+import { ComparadorDeTaxasComponent } from './comparador-de-taxas.component';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -25,7 +28,7 @@ export const customCurrencyMaskConfig = {
 };
 
 @NgModule({
-  declarations: [CalculadoraDeTaxasComponent],
+  declarations: [calculadoraTabelaComponent, ComparadorDeTaxasComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -33,6 +36,6 @@ export const customCurrencyMaskConfig = {
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     TooltipModule.forRoot(),
   ],
-  providers: [CalculadoraDeTaxasService, { provide: LOCALE_ID, useValue: 'pt-BR' }],
+  providers: [comparadorDeTaxasService, { provide: LOCALE_ID, useValue: 'pt-BR' }],
 })
-export class CalculadoraDeTaxasModule {}
+export class comparadorDeTaxasModule {}
