@@ -6,10 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { comparadorDeTaxasModule } from './comparador-de-taxas/comparador-de-taxas.module';
-import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule, comparadorDeTaxasModule],
   providers: [],
   bootstrap: [AppComponent],

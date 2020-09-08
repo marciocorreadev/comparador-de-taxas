@@ -28,7 +28,6 @@
                 onClick="this.select()"
                 inputmode="numeric"
                 (blur)="validarFormulario()"
-                [ngClass]="{ 'is-invalid': !validForm }"
                 type="tel"
                 currencyMask
                 id="valorTransacao"
@@ -36,7 +35,6 @@
                 class="form-control valorTransacao"
                 type="text"
                 formControlName="valorTransacao"
-                autofocus
               />
             </div>
             <div class="col-md-6 col-lg-4">

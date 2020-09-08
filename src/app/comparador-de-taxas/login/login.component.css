@@ -1,0 +1,19 @@
+/** @format */
+.login {
+  position: relative;
+  border: 1px solid black;
+  height: 600px;
+}
+.calculadora {
+  position: absolute;
+  left: 40px;
+  bottom: 40px !important;
+  z-index: 2;
+}
+
+.tabela {
+  position: absolute;
+  right: 30px;
+  top: 40px;
+  z-index: 1;
+}

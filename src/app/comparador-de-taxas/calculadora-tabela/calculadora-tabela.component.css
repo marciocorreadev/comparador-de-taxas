@@ -8,6 +8,11 @@
   color: var(--yellow);
 }
 
+input,
+select {
+  font-size: 0.9rem;
+}
+
 .col-md-6,
 .col-md-4,
 .col-md-3,
@@ -174,7 +179,7 @@ section {
   }
   .alert-erro {
     display: inline;
-    top: 9px;
+    top: 7px;
   }
   label,
   .alert-erro,

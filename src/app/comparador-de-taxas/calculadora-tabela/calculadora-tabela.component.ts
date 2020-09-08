@@ -68,33 +68,51 @@ export class calculadoraTabelaComponent implements OnInit, OnDestroy {
     );
     this.subscriptions.push(
       this.form.get('taxaParcelamento').valueChanges.subscribe((value) => {
-        localStorage.setItem('taxaParcelamento', value);
+        if (!value) {
+          this.form.get('taxaParcelamento').setValue('0');
+        } else {
+          localStorage.setItem('taxaParcelamento', value);
+        }
       })
     );
     this.subscriptions.push(
       this.form.get('taxaDebito').valueChanges.subscribe((value) => {
-        this.atualizarTxDebito(this.form.get('promocao').value, value);
+        if (!value) {
+          this.form.get('taxaDebito').setValue('0');
+        } else {
+          this.atualizarTxDebito(this.form.get('promocao').value, value);
+        }
       })
     );
 
     this.subscriptions.push(
       this.form.get('taxaCreditoAVista').valueChanges.subscribe((value) => {
-        this.atualizarTxCredAVista(this.form.get('planoRecebimento').value, value);
+        if (!value) {
+          this.form.get('taxaCreditoAVista').setValue('0');
+        } else {
+          this.atualizarTxCredAVista(this.form.get('planoRecebimento').value, value);
+        }
       })
     );
 
     this.subscriptions.push(
       this.form.get('taxaCreditoParcelado2a6').valueChanges.subscribe((value) => {
-        this.atualizarTxCredParcelado2a6(this.form.get('planoRecebimento').value, value);
-        // if (this.form.get('taxaCreditoParcelado7a12').value < value) {
-        this.form.get('taxaCreditoParcelado7a12').setValue(value);
-        // }
+        if (!value) {
+          this.form.get('taxaCreditoParcelado2a6').setValue('0');
+        } else {
+          this.form.get('taxaCreditoParcelado7a12').setValue(value);
+          this.atualizarTxCredParcelado2a6(this.form.get('planoRecebimento').value, value);
+        }
       })
     );
 
     this.subscriptions.push(
       this.form.get('taxaCreditoParcelado7a12').valueChanges.subscribe((value) => {
-        this.atualizarTxCredParcelado7a12(this.form.get('planoRecebimento').value, value);
+        if (!value) {
+          this.form.get('taxaCreditoParcelado7a12').setValue('0');
+        } else {
+          this.atualizarTxCredParcelado7a12(this.form.get('planoRecebimento').value, value);
+        }
       })
     );
 
@@ -334,7 +352,7 @@ export class calculadoraTabelaComponent implements OnInit, OnDestroy {
       // }, 300);
     } else {
       this.validarFormulario();
-      this.el.nativeElement.querySelector('.valorTransacao').focus();
+      // this.el.nativeElement.querySelector('.valorTransacao').focus();
     }
   }
 
