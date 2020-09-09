@@ -10,7 +10,6 @@ import { registerLocaleData } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { calculadoraTabelaComponent } from './calculadora-tabela/calculadora-tabela.component';
 import { ComparadorDeTaxasComponent } from './comparador-de-taxas.component';
-import { LoginComponent } from './login/login.component';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -29,7 +28,7 @@ export const customCurrencyMaskConfig = {
 };
 
 @NgModule({
-  declarations: [calculadoraTabelaComponent, ComparadorDeTaxasComponent, LoginComponent],
+  declarations: [calculadoraTabelaComponent, ComparadorDeTaxasComponent],
   imports: [
     CommonModule,
     FormsModule,

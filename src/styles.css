@@ -8,6 +8,7 @@
   --purple: #6f42c1;
   --pink: #e83e8c;
   --red: #dc3545;
+  --red-light: #bb485475;
   --orange: #fd7e14;
   --yellow: #ffc107;
   --green: #28a745;
@@ -63,10 +64,28 @@ body {
 }
 
 .btn-confirm-sweet {
-  /* padding: 10px 30px !important; */
-  height: 3rem;
+  height: 2.8rem;
 }
 
-.input-sweet {
-  height: 2.7rem;
+.form-control,
+.input-sweet,
+.input-sweet:-internal-autofill-selected {
+  height: 2.5rem;
+  background-color: white !important;
+  border: 1px solid #ced4da;
+  outline: none;
+  outline-color: transparent;
+}
+.invalid-input-sweet {
+  border: 1px solid var(--red-light);
+}
+.valid-input-sweet {
+  border: 1px solid var(--blue-light);
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #000 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
 }
