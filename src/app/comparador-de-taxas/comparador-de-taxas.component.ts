@@ -89,6 +89,7 @@ export class ComparadorDeTaxasComponent implements OnInit {
       },
     });
     if (dadosLoginCalculadora != true && dadosLoginCalculadora != false) {
+      this.dadosLoginCalculadora = dadosLoginCalculadora;
       localStorage.setItem('dadosLoginCalculadora', JSON.stringify(dadosLoginCalculadora));
     }
   }
