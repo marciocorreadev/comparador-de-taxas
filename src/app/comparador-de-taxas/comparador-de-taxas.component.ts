@@ -2,8 +2,10 @@
 
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import Swal from 'sweetalert2';
+import { comparadorDeTaxasService } from './comparador-de-taxas.service';
 
 @Component({
   selector: 'app-comparador-de-taxas',
@@ -15,7 +17,13 @@ export class ComparadorDeTaxasComponent implements OnInit {
 
   dadosLoginCalculadora = localStorage.getItem('dadosLoginCalculadora');
 
-  constructor(private formBuilder: FormBuilder, private el: ElementRef) {}
+  private subscriptions: Subscription[] = [];
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private el: ElementRef,
+    private service: comparadorDeTaxasService
+  ) {}
   ngOnInit() {
     this.form = this.formBuilder.group({
       nome: [, [Validators.required, Validators.minLength(3)]],
@@ -24,6 +32,7 @@ export class ComparadorDeTaxasComponent implements OnInit {
   }
 
   onSwal() {
+    this.dadosLoginCalculadora = localStorage.getItem('dadosLoginCalculadora');
     if (!this.dadosLoginCalculadora) {
       setTimeout(async () => {
         this.onLogin();
@@ -40,7 +49,7 @@ export class ComparadorDeTaxasComponent implements OnInit {
       allowOutsideClick: false,
       allowEscapeKey: false,
       allowEnterKey: false,
-      scrollbarPadding: false,
+      scrollbarPadding: true,
       confirmButtonText: 'Usar calculadora de taxas',
       confirmButtonColor: '#2196f3',
       showClass: {
@@ -90,7 +99,37 @@ export class ComparadorDeTaxasComponent implements OnInit {
     });
     if (dadosLoginCalculadora != true && dadosLoginCalculadora != false) {
       this.dadosLoginCalculadora = dadosLoginCalculadora;
-      localStorage.setItem('dadosLoginCalculadora', JSON.stringify(dadosLoginCalculadora));
+      this.subscriptions.push(
+        this.service.setCliente(dadosLoginCalculadora).subscribe(
+          (res) => {
+            if (res['data']) {
+              localStorage.setItem(
+                'dadosLoginCalculadora',
+                JSON.stringify({ ...dadosLoginCalculadora, id: res['data']._id })
+              );
+            }
+          },
+          (err) => {
+            this.service.getCliente(dadosLoginCalculadora.email).subscribe(
+              (res) => {
+                const {
+                  data: [{ _id }],
+                } = JSON.parse(res);
+                localStorage.setItem(
+                  'dadosLoginCalculadora',
+                  JSON.stringify({ ...dadosLoginCalculadora, id: _id })
+                );
+              },
+              (err) => console.log('Error in save customer')
+            );
+          }
+        )
+      );
     }
+  }
+  gOnDestroy(): void {
+    this.subscriptions.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }

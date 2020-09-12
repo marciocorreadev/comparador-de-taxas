@@ -347,12 +347,32 @@ export class calculadoraTabelaComponent implements OnInit, OnDestroy {
       this.calculaAVista(form, '1x');
       this.calculaParcelado(form);
 
-      // setTimeout(() => {
-      // window.scroll({ top: 700, behavior: 'smooth' });
-      // }, 300);
+      console.log(this.form.value);
+
+      const cliente = JSON.parse(localStorage.getItem('dadosLoginCalculadora'));
+      const taxas = {
+        cliente: cliente.id,
+        visao: this.form.get('visualizacaoDasTaxas').value,
+        planoRecebimento: this.form.get('planoRecebimento').value,
+        taxaDebito: parseFloat(this.form.get('taxaDebito').value),
+        taxaCreditoAVista: parseFloat(this.form.get('taxaCreditoAVista').value),
+        taxaCreditoParcelado2a6: parseFloat(this.form.get('taxaCreditoParcelado2a6').value),
+        taxaCreditoParcelado7a12: parseFloat(this.form.get('taxaCreditoParcelado7a12').value),
+        taxaAntecipacaoParcelamento: parseFloat(this.form.get('taxaParcelamento').value),
+      };
+
+      this.subscriptions.push(
+        this.taxasService.setTaxas(taxas).subscribe(
+          (res) => {
+            console.log(res);
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+      );
     } else {
       this.validarFormulario();
-      // this.el.nativeElement.querySelector('.valorTransacao').focus();
     }
   }
 

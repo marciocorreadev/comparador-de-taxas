@@ -10,6 +10,7 @@ import { registerLocaleData } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { calculadoraTabelaComponent } from './calculadora-tabela/calculadora-tabela.component';
 import { ComparadorDeTaxasComponent } from './comparador-de-taxas.component';
+import { HttpClientModule } from '@angular/common/http';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -35,6 +36,7 @@ export const customCurrencyMaskConfig = {
     ReactiveFormsModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     TooltipModule.forRoot(),
+    HttpClientModule,
   ],
   providers: [comparadorDeTaxasService, { provide: LOCALE_ID, useValue: 'pt-BR' }],
 })
