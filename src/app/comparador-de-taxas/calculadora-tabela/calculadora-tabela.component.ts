@@ -347,8 +347,6 @@ export class calculadoraTabelaComponent implements OnInit, OnDestroy {
       this.calculaAVista(form, '1x');
       this.calculaParcelado(form);
 
-      console.log(this.form.value);
-
       const cliente = JSON.parse(localStorage.getItem('dadosLoginCalculadora'));
       const taxas = {
         cliente: cliente.id,
@@ -363,11 +361,25 @@ export class calculadoraTabelaComponent implements OnInit, OnDestroy {
 
       this.subscriptions.push(
         this.taxasService.setTaxas(taxas).subscribe(
-          (res) => {
-            console.log(res);
-          },
+          (res) => {},
           (err) => {
-            console.log(err);
+            if (err['cliente'] == null) {
+              this.taxasService.setCliente(cliente).subscribe((res) => {
+                if (res['data']) {
+                  localStorage.setItem(
+                    'dadosLoginCalculadora',
+                    JSON.stringify({ ...cliente, id: res['data']._id })
+                  );
+
+                  const newTaxas = { ...taxas, cliente: res['data']._id };
+
+                  this.taxasService.setTaxas(newTaxas).subscribe(
+                    (res) => {},
+                    (err) => {}
+                  );
+                }
+              });
+            }
           }
         )
       );
@@ -377,7 +389,6 @@ export class calculadoraTabelaComponent implements OnInit, OnDestroy {
   }
 
   limpar() {
-    // window.scroll({ top: 0, behavior: 'smooth' });
     this.resultados = [];
     this.validForm = true;
     this.el.nativeElement.querySelector('.valorTransacao').focus();
